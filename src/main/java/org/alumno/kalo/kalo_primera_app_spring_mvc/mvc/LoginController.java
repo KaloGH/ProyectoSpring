@@ -25,9 +25,17 @@ public class LoginController {
 	//LoginService servicioLogin = new LoginService();
 	
 	@RequestMapping(value="/login",method = RequestMethod.GET)
-	public String mostrarLogin() {
+	public String mostrarLogin(ModelMap model) {
 		
-		servicioPagina.setPagina(paginaLogin);
+		model.put("pagina", paginaLogin);
+		
+		return "login";
+	}
+	
+	@RequestMapping(value="/",method = RequestMethod.GET)
+	public String urlInicial(ModelMap model) {
+		
+		model.put("pagina", paginaLogin);
 		
 		return "login";
 	}
@@ -35,6 +43,8 @@ public class LoginController {
 	@RequestMapping(value="/login",method = RequestMethod.POST)
 	public String procesaLogin(@RequestParam String nombre,
 			String password ,String errores,ModelMap model) {
+
+		model.put("pagina", paginaLogin);
 		
 		if (!servicioLogin.usuarioValido(nombre, password)) {
 			//Usuario inválido, volver a intentar logearse
