@@ -28,7 +28,6 @@ public class LoginController {
 	public String mostrarLogin() {
 		
 		servicioPagina.setPagina(paginaLogin);
-		// Prueba para ver si se ve en GitHub
 		
 		return "login";
 	}
