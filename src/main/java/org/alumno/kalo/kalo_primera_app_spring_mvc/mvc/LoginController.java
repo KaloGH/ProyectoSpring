@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("nombre")
 public class LoginController {
 	
 	@Autowired
@@ -20,11 +22,11 @@ public class LoginController {
 	@Autowired
 	PaginaService servicioPagina;
 	
-	Pagina paginaLogin = new Pagina("Login","/login");
+	Pagina paginaLogin = new Pagina("Login","login");
 	
 	//LoginService servicioLogin = new LoginService();
 	
-	@RequestMapping(value="/login",method = RequestMethod.GET)
+	@RequestMapping(value="login",method = RequestMethod.GET)
 	public String mostrarLogin(ModelMap model) {
 		
 		model.put("pagina", paginaLogin);
@@ -40,7 +42,7 @@ public class LoginController {
 		return "login";
 	}
 	
-	@RequestMapping(value="/login",method = RequestMethod.POST)
+	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String procesaLogin(@RequestParam String nombre,
 			String password ,String errores,ModelMap model) {
 

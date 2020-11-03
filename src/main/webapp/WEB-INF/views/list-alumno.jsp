@@ -3,6 +3,7 @@
 	
 	<div class="container">
 	<h1>Listado de Alumnos</h1>
+	<h3>Bienvenido ${nombre}</h3>
 	
 	<table class="table table-striped">
 	<thead class="thead-dark">
@@ -31,7 +32,7 @@
 	
 	</table>
 
-<a class="btn btn-success" href="/add-alumno.do">Añadir alumno</a>
+<a class="btn btn-success" href="/add-alumno">Añadir alumno</a>
 
 </div>
 
