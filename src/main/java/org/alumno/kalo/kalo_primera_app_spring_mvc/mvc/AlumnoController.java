@@ -58,7 +58,11 @@ public class AlumnoController {
 		
 		try {
 			servicioAlumno.addAlumno(new Alumno(
-					dni, Integer.parseInt(edad),ciclo,Integer.parseInt(ciclo),nombre));
+			dni, Integer.parseInt(edad),ciclo,Integer.parseInt(ciclo),nombre));
+			
+			// Para evitar pasar parametros innecesarios
+			model.clear();
+		
 			return "redirect:list-alumno";
 		} catch (NumberFormatException e) {
 			errores = e.toString();

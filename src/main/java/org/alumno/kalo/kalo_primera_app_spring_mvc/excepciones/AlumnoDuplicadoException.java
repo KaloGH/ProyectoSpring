@@ -21,7 +21,7 @@ public class AlumnoDuplicadoException extends Exception {
 	@Override
 	public String toString() {
 		return "El DNI del alumno "+newAlumno.getNombre()+ 
-				" ya está registrado para el Alumno "+oldAlumno.getNombre();
+				" ya esta registrado para el Alumno "+oldAlumno.getNombre();
 	}
 	
 	

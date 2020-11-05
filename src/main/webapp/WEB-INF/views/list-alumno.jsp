@@ -32,7 +32,7 @@
 	
 	</table>
 
-<a class="btn btn-success" href="/add-alumno">Añadir alumno</a>
+<a class="btn btn-success" href="add-alumno">Añadir alumno</a>
 
 </div>
 
