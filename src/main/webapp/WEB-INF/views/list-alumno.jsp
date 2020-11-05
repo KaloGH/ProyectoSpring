@@ -7,11 +7,11 @@
 	
 	<table class="table table-striped">
 	<thead class="thead-dark">
-		<th><a style="color: white;" href="/list-alumno.do?ordenar=Dni">DNI</a></th>
-		<th><a style="color: white;" href="/list-alumno.do?ordenar=Nombre">Nombre</a></th>
-		<th><a style="color: white;" href="/list-alumno.do?ordenar=Edad">Edad</a></th>
-		<th><a style="color: white;" href="/list-alumno.do?ordenar=Ciclo">Ciclo</a></th>
-		<th><a style="color: white;" href="/list-alumno.do?ordenar=Curso">Curso</a></th>
+		<th><a style="color: white;" href="list-alumno?ordenar=Dni">DNI</a></th>
+		<th><a style="color: white;" href="list-alumno?ordenar=Nombre">Nombre</a></th>
+		<th><a style="color: white;" href="list-alumno?ordenar=Edad">Edad</a></th>
+		<th><a style="color: white;" href="list-alumno?ordenar=Ciclo">Ciclo</a></th>
+		<th><a style="color: white;" href="list-alumno?ordenar=Curso">Curso</a></th>
 		<th>Accion</th>
 	</thead>
 	<tbody>
@@ -24,7 +24,7 @@
 		<td>${alumno.getEdad()}</td>
 		<td>${alumno.getCiclo()}</td>
 		<td>${alumno.getCurso()}</td>
-		<td><a class="btn btn-danger" href="/del-alumno.do?dni=${alumno.getDni()}">Borrar</a></td>
+		<td><a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar</a></td>
 		
 	</tr>
 		<!--  <li>${alumno.getNombre()} <a href="/del-alumno.do?dni=${alumno.getDni()}">Borrar</a></li>   -->

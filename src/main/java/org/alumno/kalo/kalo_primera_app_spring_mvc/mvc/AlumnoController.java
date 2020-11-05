@@ -25,6 +25,10 @@ public class AlumnoController {
 	
 	Pagina paginaAlumno = new Pagina("Alumnos","list-alumno");
 	
+	// *************************************************************************************************
+	// ******************* Peticion GET de LIST-ALUMNO => Reenvia a list-alumno ************************
+	// *************************************************************************************************
+	
 	@RequestMapping (value="list-alumno", method = RequestMethod.GET)
 	public String listarAlumno(ModelMap model) {
 		
@@ -35,6 +39,10 @@ public class AlumnoController {
 		return "list-alumno";
 	}
 	
+	// *************************************************************************************************
+	// ********************  Peticion GET de ADD-ALUMNO => Reenvia add-alumno **************************
+	// *************************************************************************************************
+	
 	@RequestMapping (value="add-alumno", method = RequestMethod.GET)
 	public String mostrarAddAlumno(ModelMap model) {
 		
@@ -44,6 +52,10 @@ public class AlumnoController {
 		
 		return "add-alumno";
 	}
+	
+	// *************************************************************************************************
+	// ********************  Peticion POST de ADD-ALUMNO => Añadir un alumno ***************************
+	// *************************************************************************************************
 	
 	@RequestMapping (value="add-alumno", method = RequestMethod.POST)
 	public String addAlumno(@RequestParam String dni,
@@ -75,6 +87,22 @@ public class AlumnoController {
 		return "add-alumno";
 	}
 	
+	// *************************************************************************************************
+	// ********************  Peticion GET de DEL-ALUMNO => Eliminar Alumno   ***************************
+	// *************************************************************************************************
+	
+	@RequestMapping (value="del-alumno", method = RequestMethod.GET)
+	public String delAlumno(@RequestParam String dni, ModelMap model) {
+		
+//		model.put("pagina", paginaAlumno);
+//		servicioPagina.setPagina(paginaAlumno);
+		
+		servicioAlumno.delAlumno(servicioAlumno.devuelveAlumno(dni));
+		
+		model.clear();
+		
+		return "list-alumno";
+	}
 	
 	
 }
