@@ -1,6 +1,9 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
+import javax.validation.Valid;
+
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
+
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
@@ -8,6 +11,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,7 +65,16 @@ public class AlumnoController {
 	// *************************************************************************************************
 	
 	@RequestMapping (value="add-alumno", method = RequestMethod.POST)
-	public String addAlumno(Alumno alumno , ModelMap model) {
+	public String addAlumno(ModelMap model , @Valid Alumno alumno , BindingResult validacion ) {
+		if (validacion.hasErrors()) {
+			//Hay errores de validacion y debemos volver al formulario de alta.
+			model.put("pagina", paginaAlumno);
+			return "add-alumno";
+		}
+		
+		
+		
+		// Si llega aqui no hay errores de Validación
 		String errores = "";
 		servicioPagina.setPagina(paginaAlumno);
 		model.put("pagina", paginaAlumno);

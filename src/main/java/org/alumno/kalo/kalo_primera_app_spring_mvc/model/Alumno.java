@@ -2,12 +2,42 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+
+import org.hibernate.validator.constraints.Length;
+
+
 public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN CASO DE GASTAR COMPARABLE
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	@Size(min=9 , message="El DNI debe de tener un tamaño minimo de 9")
+	private String dni;
+
+	@Size(min=5, message="El nombre debe de tener una longitud minima de 5 caracteres.")
+	private String nombre;
+	
+	@Min(value=18 , message="Debes tener minimo 18 años.")@Max(value=100 , message="No puedes tener mas de 100 años.")
+	private int edad;
+
+	@Length(min=3 , max= 5, message="Ingresa la abreviación de la asignatura. No es necesario todo el nombre.")@NotEmpty()
+	private String ciclo;
+	
+	@Min(value=1, message="El curso inicial es 1")@Max(value=4, message="El curso mas alto es 4")
+	private int curso;
+	
+	
+	
+	
+	
+	
 	
 	public Alumno() {}
 
@@ -25,13 +55,9 @@ public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN C
 		this.nombre = nombre;
 	}
 
-	private String dni;
 
-	private int edad;
 
-	private String ciclo;
 
-	private int curso;
 
 	public String getDni() {
 		return dni;
@@ -65,7 +91,6 @@ public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN C
 		this.curso = curso;
 	}
 
-	private String nombre;
 
 	public String getNombre() {
 		return nombre;
