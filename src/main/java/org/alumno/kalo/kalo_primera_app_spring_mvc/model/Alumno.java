@@ -1,6 +1,15 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
-public class Alumno  implements Comparable<Alumno>{  //<= USAR EN CASO DE GASTAR COMPARABLE
+import java.io.Serializable;
+
+public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN CASO DE GASTAR COMPARABLE
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public Alumno() {}
 
 	public Alumno(String dni) {
 		super();

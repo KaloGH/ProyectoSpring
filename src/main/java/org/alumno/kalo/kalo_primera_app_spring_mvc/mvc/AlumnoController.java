@@ -46,8 +46,11 @@ public class AlumnoController {
 	@RequestMapping (value="add-alumno", method = RequestMethod.GET)
 	public String mostrarAddAlumno(ModelMap model) {
 		
+		
 		model.put("alumnos", servicioAlumno.listaAlumnos());
 		model.put("pagina", paginaAlumno);
+//		public Alumno(String dni, int edad, String ciclo, int curso, String nombre) {
+		model.addAttribute("alumno", new Alumno("",18,"DAW",2,"Nuevo Alumno"));
 		servicioPagina.setPagina(paginaAlumno);
 		
 		return "add-alumno";
@@ -58,19 +61,13 @@ public class AlumnoController {
 	// *************************************************************************************************
 	
 	@RequestMapping (value="add-alumno", method = RequestMethod.POST)
-	public String addAlumno(@RequestParam String dni,
-			@RequestParam String nombre,
-			@RequestParam String edad,
-			@RequestParam String ciclo,
-			@RequestParam String curso,
-			ModelMap model) {
+	public String addAlumno(Alumno alumno , ModelMap model) {
 		String errores = "";
 		servicioPagina.setPagina(paginaAlumno);
 		model.put("pagina", paginaAlumno);
 		
 		try {
-			servicioAlumno.addAlumno(new Alumno(
-			dni, Integer.parseInt(edad),ciclo,Integer.parseInt(curso),nombre));
+			servicioAlumno.addAlumno(alumno);
 			
 			// Para evitar pasar parametros innecesarios
 			model.clear();
