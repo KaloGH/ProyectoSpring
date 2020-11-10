@@ -39,7 +39,7 @@ public class LoginController {
 		
 		model.put("pagina", paginaLogin);
 		
-		return "login";
+		return "redirect:login";
 	}
 	
 	@RequestMapping(value="login",method = RequestMethod.POST)

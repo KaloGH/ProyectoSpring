@@ -70,7 +70,7 @@ public class AlumnoController {
 		
 		try {
 			servicioAlumno.addAlumno(new Alumno(
-			dni, Integer.parseInt(edad),ciclo,Integer.parseInt(ciclo),nombre));
+			dni, Integer.parseInt(edad),ciclo,Integer.parseInt(curso),nombre));
 			
 			// Para evitar pasar parametros innecesarios
 			model.clear();
@@ -101,7 +101,7 @@ public class AlumnoController {
 		
 		model.clear();
 		
-		return "list-alumno";
+		return "redirect:list-alumno";
 	}
 	
 	
