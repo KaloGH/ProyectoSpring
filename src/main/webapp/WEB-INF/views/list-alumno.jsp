@@ -24,7 +24,10 @@
 		<td>${alumno.getEdad()}</td>
 		<td>${alumno.getCiclo()}</td>
 		<td>${alumno.getCurso()}</td>
-		<td><a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar</a></td>
+		<td>
+		<a class="btn btn-success" href="update-alumno?dni=${alumno.getDni()}">Modificar</a>
+		<a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar</a>
+		</td>
 		
 	</tr>
 		<!--  <li>${alumno.getNombre()} <a href="/del-alumno.do?dni=${alumno.getDni()}">Borrar</a></li>   -->

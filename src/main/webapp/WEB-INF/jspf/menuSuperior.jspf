@@ -4,7 +4,7 @@
 
 		<nav class="nav nav-pills flex-column flex-sm-row">
 			<a class="nav-link ${pagina.getStrBootstrapActiva('login')}" href="login">Home</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva('list-alumno')}" href="list-alumno">Alumnos</a>
+			<a class="nav-link ${pagina.getStrBootstrapActiva('list-alumno')}" href="list-alumno?ordenar=">Alumnos</a>
 			<a class="nav-link ${pagina.getStrBootstrapActiva("/list-errores.do")}" href="/list-errores.do">Errores</a>
 			<a class="nav-link" href="http://www.ieslluissimarro.org/moodle/course/view.php?id=508">DWES</a>
 		</nav>

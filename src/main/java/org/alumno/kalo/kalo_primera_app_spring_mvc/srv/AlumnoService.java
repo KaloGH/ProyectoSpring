@@ -103,5 +103,17 @@ public class AlumnoService {
 		return null;
 
 	}
+	
+	// Funcion para modificar el Alumno.
+	public void updateAlumno(Alumno alumno) throws AlumnoDuplicadoException {
+		
+		//La opcion más facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
+		//TODO:
+		
+		
+		delAlumno(devuelveAlumno(alumno.getDni()));
+		addAlumno(alumno);
+		
+	}
 
 }
