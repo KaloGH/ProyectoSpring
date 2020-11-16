@@ -67,7 +67,7 @@ public class AlumnoController {
 	}
 
 	// *************************************************************************************************
-	// ******************** Peticion POST de ADD-ALUMNO => Añadir un alumno  ***************************
+	// ******************** Peticion POST de ADD-ALUMNO => Aï¿½adir un alumno  ***************************
 	// *************************************************************************************************
 
 	@RequestMapping(value = "add-alumno", method = RequestMethod.POST)
@@ -79,7 +79,7 @@ public class AlumnoController {
 			return "add-alumno";
 		}
 
-		// Si llega aqui no hay errores de Validación
+		// Si llega aqui no hay errores de Validaciï¿½n
 		String errores = "";
 		servicioPagina.setPagina(paginaAlumno);
 		model.put("pagina", paginaAlumno);
@@ -145,23 +145,18 @@ public class AlumnoController {
 				return "update-alumno";
 			}
 
-			// Si llega aqui no hay errores de Validación
+			// Si llega aqui no hay errores de Validaciï¿½n
 			String errores = "";
 			servicioPagina.setPagina(paginaAlumno);
 			model.put("pagina", paginaAlumno);
 
 			try {
-				servicioAlumno.updateAlumno(alumno, "nombre");
+				servicioAlumno.updateAlumno(alumno, model.getAttribute("nombre").toString()); // Cogemos variable sesion nombre y hacemos String.
 
 				// Para evitar pasar parametros innecesarios
 				model.clear();
 
 				return "redirect:list-alumno?ordenar=";
-			} catch (NumberFormatException e) {
-				errores = e.toString();
-
-			} catch (AlumnoDuplicadoException e) {
-				errores = e.toString();
 			} catch (Exception e) {
 				errores = e.toString();
 			}

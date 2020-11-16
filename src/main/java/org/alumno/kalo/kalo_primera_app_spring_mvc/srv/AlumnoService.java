@@ -109,16 +109,17 @@ public class AlumnoService {
 	// Funcion para modificar el Alumno.
 	public void updateAlumno(Alumno alumnoModificado,String usuarioModificacion) throws Exception {
 		
-		//La opcion más facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
+		//La opcion mï¿½s facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
 		//TODO:
-		
-			if (!alumnoModificado.sePuedeModificarUtilizando(alumnoModificado))
-				throw new Exception(alumnoModificado.mensajeNoSePuedeModificar());
+			Alumno alumnoActual = devuelveAlumno(alumnoModificado.getDni());
 			
-			delAlumno(devuelveAlumno(alumnoModificado.getDni()));
-			addAlumno(alumnoModificado);
+			if (!alumnoActual.sePuedeModificarUtilizando(alumnoModificado))
+				throw new Exception(alumnoActual.mensajeNoSePuedeModificar());
+			
+			delAlumno(alumnoActual);
 			alumnoModificado.setUser(usuarioModificacion);
-			alumnoModificado.setTs(Ts.today());
+			alumnoModificado.setTs(new Date());
+			addAlumno(alumnoModificado);
 			
 			// Revisar esto de arriba
 			

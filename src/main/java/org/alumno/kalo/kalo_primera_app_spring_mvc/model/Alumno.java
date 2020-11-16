@@ -19,16 +19,16 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	@Size(min=9 , message="El DNI debe de tener un tamaño minimo de 9")
+	@Size(min=9 , message="El DNI debe de tener un tamaï¿½o minimo de 9")
 	private String dni;
 
 	@Size(min=5, message="El nombre debe de tener una longitud minima de 5 caracteres.")
 	private String nombre;
 	
-	@Min(value=18 , message="Debes tener minimo 18 años.")@Max(value=100 , message="No puedes tener mas de 100 años.")
+	@Min(value=18 , message="Debes tener minimo 18 aï¿½os.")@Max(value=100 , message="No puedes tener mas de 100 aï¿½os.")
 	private int edad;
 
-	@Length(min=3 , max= 5, message="Ingresa la abreviación de la asignatura. No es necesario todo el nombre.")@NotEmpty()
+	@Length(min=3 , max= 5, message="Ingresa la abreviaciï¿½n de la asignatura. No es necesario todo el nombre.")@NotEmpty()
 	private String ciclo;
 	
 	@Min(value=1, message="El curso inicial es 1")@Max(value=4, message="El curso mas alto es 4")
@@ -149,7 +149,6 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 		
 	}
 
-	@Override
 	public boolean sePuedeModificarUtilizando(Alumno itemModificado) {
 		if ( this.getUser() != null && this.getTs() != null ) {
 			// Existe un usuario y una fecha Inicial y tenemos que comprobar
@@ -164,16 +163,15 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 				return false;
 			
 		}
-		// No tenemos fecha o usuario -> 1º modificacion por lo que se puede modificar.
+		// No tenemos fecha o usuario -> 1ï¿½ modificacion por lo que se puede modificar.
 		return true;
 	}
 
-	@Override
 	public String mensajeNoSePuedeModificar() {
 		// Mensaje generico para poder reutilizarlo
 		String msg = "\r\n\t[ERROR]\r\n<br/>"+
 		"\t '$item' ha sido modificado por otro usuario.\r\n<br/>"+
-		"\t Para evitar la pérdida de informacion se impide guardar '$item'.\r\n<br/>"+
+		"\t Para evitar la pï¿½rdida de informacion se impide guardar '$item'.\r\n<br/>"+
 		"\t Ultima modificacion realizada por ["+this.getUser() + "] el ["+
 		Ts.ts(this.getTs()) + "]\r\n<br/>";
 		
