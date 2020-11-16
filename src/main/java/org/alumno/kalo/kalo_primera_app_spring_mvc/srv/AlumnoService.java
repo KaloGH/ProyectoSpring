@@ -1,11 +1,13 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.srv;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCicloNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCursoNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoDni;
@@ -105,14 +107,21 @@ public class AlumnoService {
 	}
 	
 	// Funcion para modificar el Alumno.
-	public void updateAlumno(Alumno alumno) throws AlumnoDuplicadoException {
+	public void updateAlumno(Alumno alumnoModificado,String usuarioModificacion) throws Exception {
 		
 		//La opcion más facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
 		//TODO:
 		
-		
-		delAlumno(devuelveAlumno(alumno.getDni()));
-		addAlumno(alumno);
+			if (!alumnoModificado.sePuedeModificarUtilizando(alumnoModificado))
+				throw new Exception(alumnoModificado.mensajeNoSePuedeModificar());
+			
+			delAlumno(devuelveAlumno(alumnoModificado.getDni()));
+			addAlumno(alumnoModificado);
+			alumnoModificado.setUser(usuarioModificacion);
+			alumnoModificado.setTs(Ts.today());
+			
+			// Revisar esto de arriba
+			
 		
 	}
 

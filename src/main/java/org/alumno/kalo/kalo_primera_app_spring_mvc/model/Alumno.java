@@ -1,17 +1,18 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.interfaces.Modificable;
 import org.hibernate.validator.constraints.Length;
 
 
-public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN CASO DE GASTAR COMPARABLE
+public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alumno>{  //<= USAR EN CASO DE GASTAR COMPARABLE
 
 	/**
 	 * 
@@ -33,12 +34,31 @@ public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN C
 	@Min(value=1, message="El curso inicial es 1")@Max(value=4, message="El curso mas alto es 4")
 	private int curso;
 	
+	private Date ts;
+	private String user;
 	
 	
 	
 	
 	
 	
+	
+	public Date getTs() {
+		return ts;
+	}
+
+	public void setTs(Date ts) {
+		this.ts = ts;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
 	public Alumno() {}
 
 	public Alumno(String dni) {
@@ -127,6 +147,38 @@ public class Alumno  implements Serializable,Comparable<Alumno>{  //<= USAR EN C
 	public int compareTo(Alumno alumno) {
 		return this.nombre.compareTo(alumno.getNombre());
 		
+	}
+
+	@Override
+	public boolean sePuedeModificarUtilizando(Alumno itemModificado) {
+		if ( this.getUser() != null && this.getTs() != null ) {
+			// Existe un usuario y una fecha Inicial y tenemos que comprobar
+			String usuarioActual = this.getUser();
+			String usuarioModificado = itemModificado.getUser();
+			
+			Date fechaActual = Ts.parseIso(Ts.formatIso(this.getTs()));
+			Date fechaModificada = Ts.parseIso(Ts.formatIso(itemModificado.getTs()));
+			
+			if (!usuarioActual.equals(usuarioModificado) || !fechaActual.equals(fechaModificada)) 
+				// El usuario no es el mismo o la fecha cambia
+				return false;
+			
+		}
+		// No tenemos fecha o usuario -> 1º modificacion por lo que se puede modificar.
+		return true;
+	}
+
+	@Override
+	public String mensajeNoSePuedeModificar() {
+		// Mensaje generico para poder reutilizarlo
+		String msg = "\r\n\t[ERROR]\r\n<br/>"+
+		"\t '$item' ha sido modificado por otro usuario.\r\n<br/>"+
+		"\t Para evitar la pérdida de informacion se impide guardar '$item'.\r\n<br/>"+
+		"\t Ultima modificacion realizada por ["+this.getUser() + "] el ["+
+		Ts.ts(this.getTs()) + "]\r\n<br/>";
+		
+		// Para concretar el tipo de registro modificado sustituimos $item por Alumno.
+		return msg.replace("$item", "Alumno");
 	}
 
 	

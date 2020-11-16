@@ -151,7 +151,7 @@ public class AlumnoController {
 			model.put("pagina", paginaAlumno);
 
 			try {
-				servicioAlumno.updateAlumno(alumno);
+				servicioAlumno.updateAlumno(alumno, "nombre");
 
 				// Para evitar pasar parametros innecesarios
 				model.clear();
@@ -161,6 +161,8 @@ public class AlumnoController {
 				errores = e.toString();
 
 			} catch (AlumnoDuplicadoException e) {
+				errores = e.toString();
+			} catch (Exception e) {
 				errores = e.toString();
 			}
 			// Si llegamos aqui ha habido un error porque no se ejecuta la linea 54
