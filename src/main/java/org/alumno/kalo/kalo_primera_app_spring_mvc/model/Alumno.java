@@ -37,12 +37,40 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	private Date ts;
 	private String user;
 	
+	private boolean erasmus;
+	private String[] interesadoEn;
+	private String lenguajeFavorito;
 	
 	
 	
 	
 	
 	
+	
+	public boolean isErasmus() {
+		return erasmus;
+	}
+
+	public void setErasmus(boolean erasmus) {
+		this.erasmus = erasmus;
+	}
+
+	public String[] getInteresadoEn() {
+		return interesadoEn;
+	}
+
+	public void setInteresadoEn(String[] interesadoEn) {
+		this.interesadoEn = interesadoEn;
+	}
+
+	public String getLenguajeFavorito() {
+		return lenguajeFavorito;
+	}
+
+	public void setLenguajeFavorito(String lenguajeFavorito) {
+		this.lenguajeFavorito = lenguajeFavorito;
+	}
+
 	public Date getTs() {
 		return ts;
 	}

@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -80,10 +81,16 @@ public class AlumnoController {
 		model.put("alumnos", servicioAlumno.listaAlumnos());
 		model.put("pagina", paginaAlumno);
 //		public Alumno(String dni, int edad, String ciclo, int curso, String nombre) {
+//		model.addAttribute("interesadoEnLista",servicioAlumno.listaInteresadoEn().toArray());
 		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno"));
 		servicioPagina.setPagina(paginaAlumno);
 
 		return "add-alumno";
+	}
+	
+	@ModelAttribute("interesadoEnLista")
+	public Object[] getInteresadoEnLista() {
+		return servicioAlumno.listaInteresadoEn().toArray();
 	}
 
 	// *************************************************************************************************

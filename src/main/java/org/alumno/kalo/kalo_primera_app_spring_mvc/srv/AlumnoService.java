@@ -1,6 +1,8 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.srv;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -19,12 +21,19 @@ import org.springframework.stereotype.Service;
 public class AlumnoService {
 	// Creamos la lista de alumnos.
 	private static List<Alumno> alumnos = new ArrayList<Alumno>();
+	
+	private static List<String> interesadoEnLista = new ArrayList<String>();
+
+
+
 
 	// Añadimos alumnos a la lista.
 	static {
 		alumnos.add(new Alumno("Y0006447K", 20, "DAW", 2, "Jose"));
 		alumnos.add(new Alumno("87453598J", 25, "ASIX", 1, "Pedro"));
 		alumnos.add(new Alumno("20931113D", 17, "ESO", 4, "Juan"));
+		interesadoEnLista.add("Backend");
+		interesadoEnLista.add("Frontend");
 	}
 
 	// Lista de alumnos
@@ -110,8 +119,7 @@ public class AlumnoService {
 	// Funcion para modificar el Alumno.
 	public void updateAlumno(Alumno alumnoModificado,String usuarioModificacion) throws Exception {
 		
-		//La opcion m�s facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
-		//TODO:
+		//La opcion mas facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
 			Alumno alumnoActual = devuelveAlumno(alumnoModificado.getDni());
 			
 			if (!alumnoActual.sePuedeModificarUtilizando(alumnoModificado))
@@ -126,5 +134,10 @@ public class AlumnoService {
 			
 		
 	}
+	
+	// Funcion devolver lista de interesadosEn
+	public List<String> listaInteresadoEn(){
+		return interesadoEnLista;
+	};
 
 }

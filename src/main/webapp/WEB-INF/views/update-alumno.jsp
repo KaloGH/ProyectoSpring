@@ -78,10 +78,29 @@
 
 				</div>
 
-
-
-
 			</div>
+			
+			<div class=form-row>
+			
+				<div class="col">
+					<mvc:checkbox path="erasmus"/>
+					<mvc:label path="erasmus">Alumno en Erasmus</mvc:label>
+				</div>
+				
+				<div class="col">
+					<mvc:label path="interesadoEn">Interesado en:</mvc:label><br/>
+					<mvc:checkboxes items="${interesadoEnLista}" path="interesadoEn"/>
+<%-- 					<mvc:checkbox path="interesadoEn" value="Backend"/> Backend --%>
+<%-- 					<mvc:checkbox path="interesadoEn" value="Frontend"/> Frontend --%>
+				</div>
+				
+				<div class="col">
+					<mvc:label path="lenguajeFavorito">Lenguaje favorito</mvc:label>
+					<mvc:checkbox path="lenguajeFavorito" value="Java"/>&nbsp;Java
+				</div>
+				
+			</div>
+			
 			<mvc:hidden path="user"/>
 			<mvc:hidden path="ts"/>
 			<input type="submit" value="Modificar" class="btn btn-success"/>
