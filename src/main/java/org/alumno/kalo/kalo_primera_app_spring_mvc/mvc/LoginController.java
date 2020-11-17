@@ -27,8 +27,9 @@ public class LoginController {
 	//LoginService servicioLogin = new LoginService();
 	
 	@RequestMapping(value="login",method = RequestMethod.GET)
-	public String mostrarLogin(ModelMap model) {
+	public String mostrarLogin(ModelMap model, String errores) {
 		
+		model.put("errores", errores);
 		model.put("pagina", paginaLogin);
 		
 		return "login";

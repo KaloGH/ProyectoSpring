@@ -1,5 +1,8 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
@@ -9,9 +12,12 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,14 +26,23 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @Controller
 @SessionAttributes("nombre")
 public class AlumnoController {
+	
+	Pagina paginaAlumno = new Pagina("Alumnos", "list-alumno");
 
 	@Autowired
 	AlumnoService servicioAlumno;
 
 	@Autowired
 	PaginaService servicioPagina;
+	
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+		
+	}
 
-	Pagina paginaAlumno = new Pagina("Alumnos", "list-alumno");
 
 	// *************************************************************************************************
 	// ******************* Peticion GET de LIST-ALUMNO => Reenvia a list-alumno ************************
@@ -35,6 +50,11 @@ public class AlumnoController {
 
 	@RequestMapping(value = "list-alumno", method = RequestMethod.GET)
 	public String listarAlumno(String ordenar,ModelMap model) {
+		
+		if (model.getAttribute("nombre") == null) {
+			model.put("errores", "Usuario no Logeado. Porfavor Inicia Sesion");
+			return "redirect:login";
+		}
 		
 		if (ordenar != "") {
 			
@@ -149,19 +169,23 @@ public class AlumnoController {
 			String errores = "";
 			servicioPagina.setPagina(paginaAlumno);
 			model.put("pagina", paginaAlumno);
-
-			try {
-				servicioAlumno.updateAlumno(alumno, model.getAttribute("nombre").toString()); // Cogemos variable sesion nombre y hacemos String.
-
-				// Para evitar pasar parametros innecesarios
-				model.clear();
-
-				return "redirect:list-alumno?ordenar=";
-			} catch (Exception e) {
-				errores = e.toString();
-			}
-			// Si llegamos aqui ha habido un error porque no se ejecuta la linea 54
-			model.put("errores", errores);
-			return "update-alumno";
+			
+				try {
+					servicioAlumno.updateAlumno(alumno, model.getAttribute("nombre").toString()); // Cogemos variable sesion nombre y hacemos String.
+	
+					// Para evitar pasar parametros innecesarios
+					model.clear();
+	
+					model.put("errores", errores);
+					return "redirect:list-alumno?ordenar=";
+				} catch (Exception e) {
+					errores = e.getMessage();
+//					errores = e.toString();
+				}
+				// Si llegamos aqui ha habido un error porque no se ejecuta la linea 54
+				model.put("errores", errores);
+				return "update-alumno";
+			
+			
 		}
 }

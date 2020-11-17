@@ -169,9 +169,9 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 
 	public String mensajeNoSePuedeModificar() {
 		// Mensaje generico para poder reutilizarlo
-		String msg = "\r\n\t[ERROR]\r\n<br/>"+
+		String msg = "<br/>"+
 		"\t '$item' ha sido modificado por otro usuario.\r\n<br/>"+
-		"\t Para evitar la p�rdida de informacion se impide guardar '$item'.\r\n<br/>"+
+		"\t Para evitar la perdida de informacion se impide guardar '$item'.\r\n<br/>"+
 		"\t Ultima modificacion realizada por ["+this.getUser() + "] el ["+
 		Ts.ts(this.getTs()) + "]\r\n<br/>";
 		

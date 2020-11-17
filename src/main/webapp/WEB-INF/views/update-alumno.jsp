@@ -82,6 +82,8 @@
 
 
 			</div>
+			<mvc:hidden path="user"/>
+			<mvc:hidden path="ts"/>
 			<input type="submit" value="Modificar" class="btn btn-success"/>
 <%-- 			<mvc:input path="envia" type="submit" value="Añadir" class="btn btn-success"/> --%>
 
