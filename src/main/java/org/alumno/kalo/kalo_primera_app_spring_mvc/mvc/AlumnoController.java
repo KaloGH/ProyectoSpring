@@ -8,8 +8,11 @@ import javax.validation.Valid;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -25,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("nombre")
+@SessionAttributes("usuario")
 public class AlumnoController {
 	
 	Pagina paginaAlumno = new Pagina("Alumnos", "list-alumno");
@@ -35,6 +38,9 @@ public class AlumnoController {
 
 	@Autowired
 	PaginaService servicioPagina;
+	
+	@Autowired
+	LogErrorService servicioLogError;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -50,14 +56,24 @@ public class AlumnoController {
 	// *************************************************************************************************
 
 	@RequestMapping(value = "list-alumno", method = RequestMethod.GET)
-	public String listarAlumno(String ordenar,ModelMap model) {
+	public String listarAlumno(@RequestParam(required = false)String ordenar,ModelMap model) {
+		Usuario user = (Usuario) model.getAttribute("usuario");
 		
-		if (model.getAttribute("nombre") == null) {
-			model.put("errores", "Usuario no Logeado. Porfavor Inicia Sesion");
+		System.out.println(((Usuario) model.getAttribute("usuario")).getNickname()); //TODO: Arreglar esto. Falla porque funciona sin nombre.
+		
+		if (user.getNickname() == "") {
+			servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Acceso Denegado","Usuario anónimo ha intentado acceder a la web"));
+			model.clear();
 			return "redirect:login";
 		}
 		
-		if (ordenar != "") {
+		if (model.getAttribute("usuario") == null) {
+			model.put("errores", "Usuario no Logeado. Porfavor Inicia Sesion");
+			model.clear();
+			return "redirect:login";
+		}
+		
+		if (ordenar != null) {
 			
 			model.put("alumnos", servicioAlumno.listaAlumnos(ordenar));
  		} else {
@@ -77,12 +93,13 @@ public class AlumnoController {
 
 	@RequestMapping(value = "add-alumno", method = RequestMethod.GET)
 	public String mostrarAddAlumno(ModelMap model) {
+		String[] superInteresao = {"Backend","Frontend"};
 
 		model.put("alumnos", servicioAlumno.listaAlumnos());
 		model.put("pagina", paginaAlumno);
 //		public Alumno(String dni, int edad, String ciclo, int curso, String nombre) {
 //		model.addAttribute("interesadoEnLista",servicioAlumno.listaInteresadoEn().toArray());
-		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno"));
+		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno",true,superInteresao,"Python","Tarde"));
 		servicioPagina.setPagina(paginaAlumno);
 
 		return "add-alumno";
@@ -91,6 +108,16 @@ public class AlumnoController {
 	@ModelAttribute("interesadoEnLista")
 	public Object[] getInteresadoEnLista() {
 		return servicioAlumno.listaInteresadoEn().toArray();
+	}
+	
+	@ModelAttribute("generoLista")
+	public Object[] getGeneroLista() {
+		return servicioAlumno.listaGeneros().toArray();
+	}
+	
+	@ModelAttribute("horarioLista")
+	public Object[] getHorarioLista() {
+		return servicioAlumno.listaHorario().toArray();
 	}
 
 	// *************************************************************************************************
@@ -117,7 +144,7 @@ public class AlumnoController {
 			// Para evitar pasar parametros innecesarios
 			model.clear();
 
-			return "redirect:list-alumno?ordenar=";
+			return "redirect:list-alumno";
 		} catch (NumberFormatException e) {
 			errores = e.toString();
 
@@ -176,9 +203,8 @@ public class AlumnoController {
 			String errores = "";
 			servicioPagina.setPagina(paginaAlumno);
 			model.put("pagina", paginaAlumno);
-			
 				try {
-					servicioAlumno.updateAlumno(alumno, model.getAttribute("nombre").toString()); // Cogemos variable sesion nombre y hacemos String.
+					servicioAlumno.updateAlumno(alumno, model.getAttribute("usuario").toString()); // Cogemos variable sesion nombre y hacemos String.
 	
 					// Para evitar pasar parametros innecesarios
 					model.clear();

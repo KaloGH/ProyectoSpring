@@ -10,11 +10,13 @@ import java.util.List;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCicloNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCursoNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoDni;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoEdadNombre;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,17 +25,30 @@ public class AlumnoService {
 	private static List<Alumno> alumnos = new ArrayList<Alumno>();
 	
 	private static List<String> interesadoEnLista = new ArrayList<String>();
+	
+	private static List<String> generoLista = new ArrayList<String>();
+	
+	private static List<String> horarioLista = new ArrayList<String>();
 
-
+	@Autowired
+	LogErrorService servicioLogError;
 
 
 	// Añadimos alumnos a la lista.
 	static {
-		alumnos.add(new Alumno("Y0006447K", 20, "DAW", 2, "Jose"));
-		alumnos.add(new Alumno("87453598J", 25, "ASIX", 1, "Pedro"));
-		alumnos.add(new Alumno("20931113D", 17, "ESO", 4, "Juan"));
+		
+//		String dni, int edad, String ciclo, int curso, String nombre || boolean erasmus,String[] interesadoEn,String lenguajeFavorito
+		String[] superInteresao = {"Backend","Frontend"};
+		alumnos.add(new Alumno("Y0006447K", 20, "DAW", 2, "Jose",true,superInteresao,"Python","Mañana"));
+		alumnos.add(new Alumno("87453598J", 25, "ASIX", 1, "Pedro",true,superInteresao,"Python","Mañana"));
+		alumnos.add(new Alumno("20931113D", 17, "ESO", 4, "Juan",true,superInteresao,"Python","Mañana"));
 		interesadoEnLista.add("Backend");
 		interesadoEnLista.add("Frontend");
+		generoLista.add("Masculino");
+		generoLista.add("Femenino");
+		horarioLista.add("Mañana");
+		horarioLista.add("Tarde");
+		
 	}
 
 	// Lista de alumnos
@@ -76,7 +91,9 @@ public class AlumnoService {
 	public void addAlumno(Alumno alumno) throws AlumnoDuplicadoException {
 
 		if (existeAlumno(alumno)) {
+			servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Insercion duplicada","Insercion duplicada del alumno '"+alumno.getDni()+"'"));
 			throw new AlumnoDuplicadoException(devuelveAlumno(alumno.getDni()), alumno);
+			
 		} else {
 			alumnos.add(alumno);
 		}
@@ -139,5 +156,13 @@ public class AlumnoService {
 	public List<String> listaInteresadoEn(){
 		return interesadoEnLista;
 	};
+	
+	public List<String> listaGeneros(){
+		return generoLista;
+	}
+	
+	public List<String> listaHorario() {
+		return horarioLista;
+	}
 
 }

@@ -4,14 +4,15 @@
 
 		<nav class="nav nav-pills flex-column flex-sm-row">
 			<a class="nav-link ${pagina.getStrBootstrapActiva('login')}" href="login">Home</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva('list-alumno')}" href="list-alumno?ordenar=">Alumnos</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva("/list-errores.do")}" href="/list-errores.do">Errores</a>
+			<a class="nav-link ${pagina.getStrBootstrapActiva('list-alumno')}" href="list-alumno">Alumnos</a>
+			<a class="nav-link ${pagina.getStrBootstrapActiva('list-logerror')}" href="list-logerror">Errores</a>
+			<a class="nav-link ${pagina.getStrBootstrapActiva('list-modulo')}" href="list-modulo">Modulos</a>
 			<a class="nav-link" href="http://www.ieslluissimarro.org/moodle/course/view.php?id=508">DWES</a>
 		</nav>
  
  
 		<ul class="nav navbar-nav navbar-right">
-			<li><a class="nav-link" href="/logout.do">Logout</a></li>
+			<li><a class="nav-link" href="logout">Logout</a></li>
 		</ul>
 
 	</nav>

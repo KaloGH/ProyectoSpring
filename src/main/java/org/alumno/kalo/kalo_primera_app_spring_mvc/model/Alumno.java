@@ -34,19 +34,32 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	@Min(value=1, message="El curso inicial es 1")@Max(value=4, message="El curso mas alto es 4")
 	private int curso;
 	
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
 	private Date ts;
 	private String user;
+	private String genero;
 	
 	private boolean erasmus;
 	private String[] interesadoEn;
 	private String lenguajeFavorito;
+	private String horario;
 	
 	
-	
-	
-	
-	
-	
+	public String getHorario() {
+		return horario;
+	}
+
+	public void setHorario(String horario) {
+		this.horario = horario;
+	}
+
 	public boolean isErasmus() {
 		return erasmus;
 	}
@@ -94,13 +107,19 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 		this.dni = dni;
 	}
 
-	public Alumno(String dni, int edad, String ciclo, int curso, String nombre) {
+	
+	public Alumno(String dni, int edad, String ciclo, int curso, String nombre,boolean erasmus,String[] interesadoEn,String lenguajeFavorito,String horario) {
 		super();
 		this.dni = dni;
 		this.edad = edad;
 		this.ciclo = ciclo;
 		this.curso = curso;
 		this.nombre = nombre;
+		this.erasmus = erasmus;
+		this.horario =  horario;
+		this.interesadoEn = interesadoEn;
+		this.lenguajeFavorito = lenguajeFavorito;
+		
 	}
 
 

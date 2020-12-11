@@ -89,7 +89,7 @@
 				
 				<div class="col">
 					<mvc:label path="interesadoEn">Interesado en:</mvc:label><br/>
-					<mvc:checkboxes items="${interesadoEnLista}" path="interesadoEn"/>
+					<mvc:checkboxes items="${interesadoEnLista}" path="interesadoEn" element="div"/>
 <%-- 					<mvc:checkbox path="interesadoEn" value="Backend"/> Backend --%>
 <%-- 					<mvc:checkbox path="interesadoEn" value="Frontend"/> Frontend --%>
 				</div>
@@ -97,6 +97,26 @@
 				<div class="col">
 					<mvc:label path="lenguajeFavorito">Lenguaje favorito</mvc:label><br/>
 					<mvc:checkbox path="lenguajeFavorito" value="Java"/>&nbsp;Java
+				</div>
+				
+			</div>
+			
+			<div class=form-row>
+			
+				<div class="col">
+				
+					<mvc:label path="genero">Genero:</mvc:label><br/>
+					<mvc:radiobuttons path="genero" items="${generoLista}" element="div"/>
+				
+				</div>	
+				<div class="col">
+				
+<!-- 				Aqui Va el resto -->
+					<mvc:label path="horario">Horario:</mvc:label>
+					<mvc:select path="horario">
+						<mvc:options path="horario" items="${horarioLista}" element="div"/>
+					</mvc:select>
+				
 				</div>
 				
 			</div>

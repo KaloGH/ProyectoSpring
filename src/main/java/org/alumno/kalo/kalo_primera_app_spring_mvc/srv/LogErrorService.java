@@ -83,12 +83,14 @@ public class LogErrorService {
 		// Funcion para filtrar
 			public List<LogError> listaConFiltro(String campoFiltro, String textoFiltro) {  // TODO acabar de arreglar
 				List<LogError> erroresFiltrados = new ArrayList<LogError>(errores); // Creamos una nueva lista donde meteremos los errores con el filtro
-
+				
+				if (textoFiltro == "")
+					return erroresFiltrados;
 			
 				switch (campoFiltro) {
 				case "ID":
 					
-					for (LogError logError : erroresFiltrados) {
+					for (LogError logError : errores) {
 						
 						if (logError.getId() != Integer.parseInt(textoFiltro))
 							erroresFiltrados.remove(devuelveError(logError.getId()));
