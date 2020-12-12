@@ -21,18 +21,24 @@ public class ModuloService {
 	public List<Modulo> listar(String criterio) {
 		switch (criterio) {
 		case "nombre":
-			modulos = modulos.stream().sorted((m1, m2) -> m1.getNombre().compareTo(m2.getNombre()))
+			modulos = modulos.stream()
+					.sorted((m1, m2) -> m1.getNombre().compareTo(m2.getNombre()))
 					.collect(Collectors.toList());
 			break;
 		case "horas":
-			modulos = modulos.stream().sorted((m1, m2) -> m1.getHoras() - m2.getHoras()).collect(Collectors.toList());
+			modulos = modulos.stream()
+					.sorted((m1, m2) -> m1.getHoras() - m2.getHoras())
+					.collect(Collectors.toList());
 			break;
 		case "abv":
-			modulos = modulos.stream().sorted((m1, m2) -> m1.getAbreviatura().compareTo(m2.getAbreviatura()))
+			modulos = modulos.stream()
+					.sorted((m1, m2) -> m1.getAbreviatura().compareTo(m2.getAbreviatura()))
 					.collect(Collectors.toList());
 			break;
 		default:
-			modulos = modulos.stream().sorted((m1, m2) -> m1.getId() - m2.getId()).collect(Collectors.toList());
+			modulos = modulos.stream()
+					.sorted((m1, m2) -> m1.getId() - m2.getId())
+					.collect(Collectors.toList());
 			break;
 		}
 		return modulos;

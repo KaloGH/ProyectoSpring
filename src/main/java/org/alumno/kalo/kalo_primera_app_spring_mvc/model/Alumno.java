@@ -2,6 +2,7 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -50,8 +51,19 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	private String[] interesadoEn;
 	private String lenguajeFavorito;
 	private String horario;
+	private String pais;
+	private int[] matriculadoEn;
+	private String hobbies;
 	
 	
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
 	public String getHorario() {
 		return horario;
 	}
@@ -108,23 +120,41 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	}
 
 	
-	public Alumno(String dni, int edad, String ciclo, int curso, String nombre,boolean erasmus,String[] interesadoEn,String lenguajeFavorito,String horario) {
+	public Alumno(String dni, int edad, String ciclo, int curso, String nombre,boolean erasmus,
+			String[] interesadoEn,String lenguajeFavorito,String horario,String pais,
+			int[] matriculadoEn,String hobbies) {
 		super();
 		this.dni = dni;
 		this.edad = edad;
+		this.pais = pais;
 		this.ciclo = ciclo;
 		this.curso = curso;
 		this.nombre = nombre;
+		this.hobbies = hobbies;
 		this.erasmus = erasmus;
 		this.horario =  horario;
 		this.interesadoEn = interesadoEn;
+		this.matriculadoEn = matriculadoEn;
 		this.lenguajeFavorito = lenguajeFavorito;
 		
 	}
 
 
+	public String getHobbies() {
+		return hobbies;
+	}
 
+	public void setHobbies(String hobbies) {
+		this.hobbies = hobbies;
+	}
 
+	public int[] getMatriculadoEn() {
+		return matriculadoEn;
+	}
+
+	public void setMatriculadoEn(int[] matriculadoEn) {
+		this.matriculadoEn = matriculadoEn;
+	}
 
 	public String getDni() {
 		return dni;

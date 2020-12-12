@@ -109,6 +109,26 @@
 				
 				</div>
 				
+				<div class="col">
+					<mvc:label path="pais">Pais</mvc:label>
+					<mvc:select path="pais">
+						<mvc:option value="-" label="Ninguno" />
+						<mvc:options path="pais" items="${paisLista}" element="div"/>
+					</mvc:select>
+				</div>
+				
+				<div class="col">
+					<mvc:label path="matriculadoEn">Matriculado en: </mvc:label></br>
+					<mvc:select path="matriculadoEn" items="${moduloLista}" itemValue="id" itemLabel="nombre" ></mvc:select>	
+				</div>
+				
+			</div>
+			
+			<div class="form-row">
+				<div class="col">
+					<mvc:label path="hobbies">Hobbies:</mvc:label></br>
+					<mvc:textarea path="hobbies" rows="3" cols="70" />
+				</div>
 			</div>
 			
 			<mvc:hidden path="user"/>

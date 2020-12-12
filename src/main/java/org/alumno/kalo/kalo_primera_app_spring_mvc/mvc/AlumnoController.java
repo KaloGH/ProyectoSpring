@@ -2,17 +2,23 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -41,6 +47,9 @@ public class AlumnoController {
 	
 	@Autowired
 	LogErrorService servicioLogError;
+	
+	@Autowired
+	ModuloService servicioModulo;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -73,13 +82,27 @@ public class AlumnoController {
 			return "redirect:login";
 		}
 		
+		model.put("filtroAlumno", new FiltroAlumno("",""));
+		
 		if (ordenar != null) {
-			
 			model.put("alumnos", servicioAlumno.listaAlumnos(ordenar));
  		} else {
- 			
  			model.put("alumnos", servicioAlumno.listaAlumnos());
  		}
+		model.put("pagina", paginaAlumno);
+		servicioPagina.setPagina(paginaAlumno);
+
+		return "list-alumno";
+	}
+	
+	// *************************************************************************************************
+	// ******************* Peticion POST de LIST-ALUMNO => Reenvia a list-alumno ************************
+	// *************************************************************************************************
+
+	@RequestMapping(value = "filter-alumno", method = RequestMethod.POST)
+	public String listarAlumnoConFiltro(@Valid FiltroAlumno filtroAlumno,ModelMap model) {
+		
+		model.put("alumnos", servicioAlumno.filtraAlumnos(filtroAlumno));
 		model.put("pagina", paginaAlumno);
 		servicioPagina.setPagina(paginaAlumno);
 
@@ -94,12 +117,13 @@ public class AlumnoController {
 	@RequestMapping(value = "add-alumno", method = RequestMethod.GET)
 	public String mostrarAddAlumno(ModelMap model) {
 		String[] superInteresao = {"Backend","Frontend"};
+		int[] modulaso = {0,1};
 
 		model.put("alumnos", servicioAlumno.listaAlumnos());
 		model.put("pagina", paginaAlumno);
 //		public Alumno(String dni, int edad, String ciclo, int curso, String nombre) {
 //		model.addAttribute("interesadoEnLista",servicioAlumno.listaInteresadoEn().toArray());
-		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno",true,superInteresao,"Python","Tarde"));
+		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno",true,superInteresao,"Python","Tarde","FR",modulaso,"Ingresa los Hobbies del alumno aquí."));
 		servicioPagina.setPagina(paginaAlumno);
 
 		return "add-alumno";
@@ -119,6 +143,22 @@ public class AlumnoController {
 	public Object[] getHorarioLista() {
 		return servicioAlumno.listaHorario().toArray();
 	}
+	
+	@ModelAttribute("paisLista")
+	public Map<String,String> getPais() {
+		return servicioAlumno.devuelvePais();
+	}
+	
+	@ModelAttribute("moduloLista")
+	public List<Modulo> modelLista(){
+		return servicioModulo.listar("");
+	}
+	
+	@ModelAttribute("listaFiltrar")
+	public HashMap<String,String> getListaFiltros(){
+		return servicioAlumno.listarCamposBusqueda();
+	}
+	
 
 	// *************************************************************************************************
 	// ******************** Peticion POST de ADD-ALUMNO => A�adir un alumno  ***************************
