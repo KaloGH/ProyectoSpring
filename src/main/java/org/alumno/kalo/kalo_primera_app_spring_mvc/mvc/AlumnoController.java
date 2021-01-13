@@ -187,7 +187,6 @@ public class AlumnoController {
 			return "redirect:list-alumno";
 		} catch (NumberFormatException e) {
 			errores = e.toString();
-
 		} catch (AlumnoDuplicadoException e) {
 			errores = e.toString();
 		}

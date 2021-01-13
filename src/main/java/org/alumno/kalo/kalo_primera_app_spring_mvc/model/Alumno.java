@@ -1,12 +1,14 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.interfaces.Modificable;
@@ -19,6 +21,7 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	
 	@Size(min=9 , message="El DNI debe de tener un tama�o minimo de 9")
 	private String dni;
@@ -54,6 +57,7 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	private String pais;
 	private int[] matriculadoEn;
 	private String hobbies;
+	private ArrayList<DocAlumno> docAlumno;
 	
 	
 	public String getPais() {
@@ -139,6 +143,14 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 		
 	}
 
+
+	public ArrayList<DocAlumno> getDocAlumno() {
+		return docAlumno;
+	}
+
+	public void setDocAlumno(ArrayList<DocAlumno> docAlumno) {
+		this.docAlumno = docAlumno;
+	}
 
 	public String getHobbies() {
 		return hobbies;

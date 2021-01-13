@@ -62,6 +62,8 @@
 		<td>
 		<a class="btn btn-success" href="update-alumno?dni=${alumno.getDni()}">Modificar</a>
 		<a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar</a>
+		<a class="btn btn-warning" href="doc-alumno?dni=${alumno.getDni()}">Documentacion</a>
+		
 		</td>
 		
 	</tr>
