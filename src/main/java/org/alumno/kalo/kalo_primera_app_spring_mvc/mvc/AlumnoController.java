@@ -11,12 +11,14 @@ import javax.validation.Valid;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.DocAlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -50,6 +52,9 @@ public class AlumnoController {
 	
 	@Autowired
 	ModuloService servicioModulo;
+	
+	@Autowired
+	DocAlumnoService servicioDocumento;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -260,4 +265,55 @@ public class AlumnoController {
 			
 			
 		}
+		
+		
+		// *************************************************************************************************
+		// ******************** Peticion GET de Docs-Alumno => Mostrar documentacion alumno  ***************
+		// *************************************************************************************************
+		
+		 @RequestMapping(value = ("docs-alumno") ,method=RequestMethod.GET)
+	      public String muestraDocumentacion(@RequestParam String dni ,ModelMap model) {
+			 
+	    	model.put("pagina", paginaAlumno);
+	    	
+	  		servicioPagina.setPagina(paginaAlumno);
+	  		model.put("docAlumno", new DocAlumno(servicioAlumno.siguienteDoc(dni)));
+	    	model.put("alumno", servicioAlumno.devuelveAlumno(dni));
+	    	
+	        return "doc-alumno";
+	      }
+		 
+		// *************************************************************************************************
+		// ******************** Peticion POST de Docs-Alumno => Add docs alumno ****************************
+		// *************************************************************************************************
+		 
+		 @RequestMapping(value = ("add-docAlumno") ,method=RequestMethod.POST)
+	      public String addDocumentacion(ModelMap model , @Valid DocAlumno docAlumno , BindingResult validacion) {
+	    	  
+			 model.put("pagina", paginaAlumno);
+			 servicioPagina.setPagina(paginaAlumno);
+			 
+			 if (validacion.hasErrors()) {
+				 model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
+				 return "docs-alumno";
+			 }
+			 
+			 String dni = (String) docAlumno.getDni();
+			 Alumno alumno = servicioAlumno.devuelveAlumno(dni);
+			 
+			 
+			  
+			  servicioAlumno.addDocAlumno(alumno, docAlumno);
+	  		
+	  		try {
+	  			if (alumno == null)
+	  				throw new Exception("Alumno desconocido");
+	  			if (model.getAttribute("usuario")== null)
+	  				throw new Exception("Para añadir documentacion debe estar logeado");
+	  			
+	  		} catch (Exception e) {
+	  			
+	  		}
+	      }
+		 
 }

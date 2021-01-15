@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
@@ -40,6 +41,7 @@ public class AlumnoService {
 	private static Map<String,String> pais = new HashMap<String,String>();
 	
 	private static List<Modulo> moduloLista = new ArrayList<Modulo>();
+	
 
 	@Autowired
 	LogErrorService servicioLogError;
@@ -204,6 +206,24 @@ public class AlumnoService {
 			// Revisar esto de arriba
 			
 		
+	}
+	
+	public void addDocAlumno(Alumno alumno, DocAlumno docAlumno) {
+		alumno.getDocAlumno().add(docAlumno);
+	}
+	
+	public int siguienteDoc(String dni) {
+		
+		int idFinal=0;
+		
+		if (devuelveAlumno(dni).getDocAlumno().size() == 0)
+			return ++idFinal;
+			
+		for (int i = 0; i < devuelveAlumno(dni).getDocAlumno().size(); i++) {
+			idFinal = devuelveAlumno(dni).getDocAlumno().get(i).getId();
+		}
+		
+		return ++idFinal;
 	}
 	
 	// Funcion devolver lista de interesadosEn

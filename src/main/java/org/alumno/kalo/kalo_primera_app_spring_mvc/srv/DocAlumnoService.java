@@ -95,16 +95,7 @@ public class DocAlumnoService {
 
 	}
 	
-	public int asignarId() {
-		int idFinal=0;
-		if (listaDocumentacion.size() == 0)
-			return ++idFinal;
-			
-		for (int i = 0; i < listaDocumentacion.size(); i++) {
-			idFinal = listaDocumentacion.get(i).getId();
-		}
-		return ++idFinal;
-	}
+
 	
 	public List<String> listaTipos(){
 		return tipoLista;
