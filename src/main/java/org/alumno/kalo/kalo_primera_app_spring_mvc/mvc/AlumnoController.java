@@ -18,7 +18,6 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
-import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.DocAlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -53,8 +52,6 @@ public class AlumnoController {
 	@Autowired
 	ModuloService servicioModulo;
 	
-	@Autowired
-	DocAlumnoService servicioDocumento;
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -163,6 +160,12 @@ public class AlumnoController {
 	public HashMap<String,String> getListaFiltros(){
 		return servicioAlumno.listarCamposBusqueda();
 	}
+	
+	@ModelAttribute("listaTipos")
+	public Object[] getListaTiposDocAlumno() {
+		return servicioAlumno.listaTiposDocAlumno().toArray();
+	}
+	
 	
 
 	// *************************************************************************************************
@@ -278,7 +281,7 @@ public class AlumnoController {
 	    	
 	  		servicioPagina.setPagina(paginaAlumno);
 	  		model.put("docAlumno", new DocAlumno(servicioAlumno.siguienteDoc(dni)));
-	    	model.put("alumno", servicioAlumno.devuelveAlumno(dni));
+	    	model.addAttribute("alumno", servicioAlumno.devuelveAlumno(dni));
 	    	
 	        return "doc-alumno";
 	      }
@@ -295,24 +298,34 @@ public class AlumnoController {
 			 
 			 if (validacion.hasErrors()) {
 				 model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
-				 return "docs-alumno";
+				 return "doc-alumno";
 			 }
 			 
 			 String dni = (String) docAlumno.getDni();
 			 Alumno alumno = servicioAlumno.devuelveAlumno(dni);
 			 
-			 
-			  
-			  servicioAlumno.addDocAlumno(alumno, docAlumno);
-	  		
 	  		try {
 	  			if (alumno == null)
 	  				throw new Exception("Alumno desconocido");
 	  			if (model.getAttribute("usuario")== null)
 	  				throw new Exception("Para añadir documentacion debe estar logeado");
 	  			
+	  			servicioAlumno.addDocAlumno(alumno, docAlumno);
+	  			Usuario usuarioActivo = (Usuario) model.getAttribute("usuario");
+	  			servicioAlumno.updateAlumno(alumno, usuarioActivo.getNickname());
+	  			
+	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
+	  			model.addAttribute("docAlumno",new DocAlumno(servicioAlumno.siguienteDoc(dni)));
+	  			
+	  			return "doc-alumno";
+	  			
 	  		} catch (Exception e) {
 	  			
+	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
+	  			model.addAttribute("errores",e.getMessage());
+	  			
+	  			return "doc-alumno";
+
 	  		}
 	      }
 		 

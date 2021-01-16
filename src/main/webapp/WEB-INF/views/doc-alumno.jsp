@@ -40,7 +40,7 @@
 	<br>
 	<span>Si desea añadir nueva documentacion introduzca los datos</span><br><br>
 	
-	<mvc:form method="post" action="doc-alumno" modelAttribute="documento">
+	<mvc:form method="post" action="add-docAlumno" modelAttribute="docAlumno">
 		<mvc:errors path="*" cssClass="text-warning" />
 		
 
@@ -105,7 +105,7 @@
 	
 	</tbody>
 	
-	<c:forEach items="${documentos}" var="documento">
+	<c:forEach items="${alumno.getDocAlumno()}" var="documento">
 	<tr>
 		<td>${documento.getId()}</td>
 		<td>${documento.getTipo()}</td>

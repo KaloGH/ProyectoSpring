@@ -42,6 +42,8 @@ public class AlumnoService {
 	
 	private static List<Modulo> moduloLista = new ArrayList<Modulo>();
 	
+	private static List<String> listaTiposDoc = new ArrayList<String>();
+	
 
 	@Autowired
 	LogErrorService servicioLogError;
@@ -68,6 +70,9 @@ public class AlumnoService {
 		pais.put("ES","España");
 		pais.put("UK","Inglaterra");
 		pais.put("FR","Francia");
+		listaTiposDoc.add("Certificado");
+		listaTiposDoc.add("Justificante");
+		listaTiposDoc.add("Solicitud");
 		
 	}
 
@@ -191,6 +196,28 @@ public class AlumnoService {
 	
 	// Funcion para modificar el Alumno.
 	public void updateAlumno(Alumno alumnoModificado,String usuarioModificacion) throws Exception {
+		String errores="";
+		
+		if (alumnoModificado == null) {
+			errores = "No se ha podido actualizar el alumno porque no han llegado los datos modificados.";
+		} else {
+			Alumno alumnoActual = devuelveAlumno(alumnoModificado.getDni());
+			
+			if (alumnoActual.sePuedeModificarUtilizando(alumnoModificado)) {
+				alumnos.remove(alumnoActual);
+				//Debemos asegurarnos de que no se borra la documentacion
+				alumnoModificado.setDocAlumno(alumnoActual.getDocAlumno());
+				//Actualizamos usuario y fecha de modificacion
+				alumnoModificado.setUser(usuarioModificacion);
+				alumnoModificado.setTs(new Date());
+				alumnos.add(alumnoModificado);
+			} else {
+				errores = alumnoActual.mensajeNoSePuedeModificar();
+			}
+		}
+		
+		if (errores.length()>0)
+			throw new Exception(errores);
 		
 		//La opcion mas facil es eliminar el alumno anterior y crear uno nuevo con los datos que desea modificar.
 			Alumno alumnoActual = devuelveAlumno(alumnoModificado.getDni());
@@ -216,12 +243,15 @@ public class AlumnoService {
 		
 		int idFinal=0;
 		
+		System.out.println(devuelveAlumno(dni).getDocAlumno());
+		
 		if (devuelveAlumno(dni).getDocAlumno().size() == 0)
 			return ++idFinal;
 			
-		for (int i = 0; i < devuelveAlumno(dni).getDocAlumno().size(); i++) {
-			idFinal = devuelveAlumno(dni).getDocAlumno().get(i).getId();
+		for (DocAlumno docAlumno : devuelveAlumno(dni).getDocAlumno()) {
+			idFinal = docAlumno.getId();
 		}
+		
 		
 		return ++idFinal;
 	}
@@ -245,6 +275,10 @@ public class AlumnoService {
 	
 	public List<Modulo> listaModulos() {
 		return servicioModulo.listar("");
+	}
+	
+	public List<String> listaTiposDocAlumno() {
+		return listaTiposDoc;
 	}
 
 }

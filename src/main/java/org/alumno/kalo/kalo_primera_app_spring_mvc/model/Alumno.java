@@ -140,6 +140,7 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 		this.interesadoEn = interesadoEn;
 		this.matriculadoEn = matriculadoEn;
 		this.lenguajeFavorito = lenguajeFavorito;
+		docAlumno  = new ArrayList<DocAlumno>();
 		
 	}
 

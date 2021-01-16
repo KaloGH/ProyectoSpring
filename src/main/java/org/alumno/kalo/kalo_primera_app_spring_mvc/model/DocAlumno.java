@@ -3,6 +3,7 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
@@ -17,10 +18,10 @@ public class DocAlumno implements Serializable {
 	@Size(min=9 , message="El DNI debe de tener un tamaño minimo de 9")
 	private String dni;
 	
-	@NotEmpty()
+	@NotNull(message = "Porfavor ingresa ID")
 	private Integer id;
 	
-	@NotEmpty()
+	@NotNull(message = "Porfavor ingresa el tipo")
 	private String tipo;
 	
 	@Length(min= 10, message="Los comentarios deben tener al menos 10 caracteres.")
