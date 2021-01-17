@@ -23,16 +23,16 @@ public class Alumno  implements Modificable<Alumno>,Serializable,Comparable<Alum
 	private static final long serialVersionUID = 1L;
 	
 	
-	@Size(min=9 , message="El DNI debe de tener un tama�o minimo de 9")
+	@Size(min=9 , message="El DNI debe de tener un tamanyo minimo de 9")
 	private String dni;
 
 	@Size(min=5, message="El nombre debe de tener una longitud minima de 5 caracteres.")
 	private String nombre;
 	
-	@Min(value=18 , message="Debes tener minimo 18 a�os.")@Max(value=100 , message="No puedes tener mas de 100 a�os.")
+	@Min(value=18 , message="Debes tener minimo 18 anyos.")@Max(value=100 , message="No puedes tener mas de 100 a�os.")
 	private int edad;
 
-	@Length(min=3 , max= 5, message="Ingresa la abreviaci�n de la asignatura. No es necesario todo el nombre.")@NotEmpty()
+	@Length(min=3 , max= 5, message="Ingresa la abreviacion de la asignatura. No es necesario todo el nombre.")@NotEmpty()
 	private String ciclo;
 	
 	@Min(value=1, message="El curso inicial es 1")@Max(value=4, message="El curso mas alto es 4")

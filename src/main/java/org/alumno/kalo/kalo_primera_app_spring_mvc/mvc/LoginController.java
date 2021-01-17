@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("usuario")
+@SessionAttributes({"usuario","loginName","loginNickName"})
 public class LoginController {
 	
 	@Autowired
@@ -67,7 +67,8 @@ public class LoginController {
 			return "login";
 		}
 		
-		
+		model.put("loginNickName",usuario.getNickname());
+		model.put("loginName",usuario.getNombre());
 		model.put("usuario", usuario);
 		return "bienvenida";
 	}

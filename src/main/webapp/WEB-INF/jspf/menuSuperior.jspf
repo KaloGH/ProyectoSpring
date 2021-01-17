@@ -1,18 +1,50 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a href="http://www.ieslluissimarro.org/moodle/course/view.php?id=508" class="navbar-brand">
+    <i class="fas fa-university"></i>
+  	&nbsp;DWES &nbsp; &nbsp; &nbsp;</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" 
+  	data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+  	aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-		<a href="http://ieslluissimarro.org/" class="navbar-brand">Simarro</a>
-
-		<nav class="nav nav-pills flex-column flex-sm-row">
-			<a class="nav-link ${pagina.getStrBootstrapActiva('login')}" href="login">Home</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva('list-alumno')}" href="list-alumno">Alumnos</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva('list-logerror')}" href="list-logerror">Errores</a>
-			<a class="nav-link ${pagina.getStrBootstrapActiva('list-modulo')}" href="list-modulo">Modulos</a>
-			<a class="nav-link" href="http://www.ieslluissimarro.org/moodle/course/view.php?id=508">DWES</a>
-		</nav>
- 
- 
-		<ul class="nav navbar-nav navbar-right">
-			<li><a class="nav-link" href="logout">Logout</a></li>
-		</ul>
-
-	</nav>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ${pagina.getStrBootstrapActiva("login")}">
+        <a class="nav-link" href="login"><i class="fas fa-home"></i>&nbsp;Home
+        </a>
+      </li>
+        <li class="nav-item ${pagina.getStrBootstrapActiva("list-alumno")}">
+        <a class="nav-link" href="list-alumno">
+			<i class="fas fa-user-friends"></i>&nbsp;Alumnos
+		</a>
+      </li>
+        <li class="nav-item ${pagina.getStrBootstrapActiva("list-modulo")}">
+        <a class="nav-link" href="list-modulo">
+			<i class="fas fa-book"></i>&nbsp;Modulos
+		</a>
+      </li>
+        <li class="nav-item ${pagina.getStrBootstrapActiva("list-logerror")}">
+        <a class="nav-link" href="list-logerror">
+			<i class="fas fa-skull-crossbones"></i>&nbsp;Errores</a>
+      </li>
+  </div>
+  	<div class="nav-item dropdown">
+  	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  			<img alt="${loginName}" src="imagenes/usuarioSinFoto.jpg" class="rounded-circle" style="width:50px;height:50px">
+          &nbsp;${loginNickName}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">
+			<i class="fas fa-pen"></i>&nbsp; Editar
+		  </a>
+          <a class="dropdown-item" href="#">
+            <i class="fas fa-user-circle"></i>&nbsp; Foto
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item  text-danger" href="login">
+            <i class="fas fa-door-open"></i>&nbsp; Logout
+          </a>
+        </div>
+  	</div>
+    </nav>
