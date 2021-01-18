@@ -23,6 +23,11 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
+	
 <mvc:resources mapping="/webjars/**" location="/webjars/"/>
 <mvc:resources mapping="/imagenes/**" location="/resources/imagenes/"/>
 </beans>

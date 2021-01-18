@@ -1,11 +1,14 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class Usuario implements Serializable,Comparable<Usuario> {
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.interfaces.Modificable;
+
+public class Usuario implements Serializable,Comparable<Usuario>,Modificable<Usuario> {
 	
 	/**
 	 * 
@@ -21,6 +24,12 @@ public class Usuario implements Serializable,Comparable<Usuario> {
 	private String password;
 	
 	private String nombre;
+	
+	private String nombreFicheroConImagen; // Contendra el nickname.ext , donde ext será JPG , GIF o PNG.
+	
+	private Date ts; // Almacena la fecha de la ultima modificacion
+	private String user; //Almacena la persona que ha realizado la ultima modificacion.
+	
 	
 	public Usuario(String nickname,
 					String nombre,
@@ -93,6 +102,42 @@ public class Usuario implements Serializable,Comparable<Usuario> {
 	@Override
 	public int compareTo(Usuario user) {
 		return this.getNickname().compareTo(user.getNickname());
+	}
+
+	@Override
+	public Date getTs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTs(Date ts) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setUser(String user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean sePuedeModificarUtilizando(Usuario itemModificado) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String mensajeNoSePuedeModificar() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

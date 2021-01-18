@@ -31,7 +31,7 @@
   </div>
   	<div class="nav-item dropdown">
   	    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  			<img alt="${loginName}" src="imagenes/usuarioSinFoto.jpg" class="rounded-circle" style="width:50px;height:50px">
+  			<img alt="${loginName}" src="imagenUsuario/${loginNickName}" class="rounded-circle" style="width:50px;height:50px">
           &nbsp;${loginNickName}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
