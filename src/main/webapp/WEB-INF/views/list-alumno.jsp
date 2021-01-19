@@ -8,31 +8,57 @@
 	
 	<table class="table table-striped">
 	
-	<mvc:form action="filter-alumno" method="post" modelAttribute="filtroAlumno">
+	<mvc:form action="filtro-avanzado-alumnos" method="post" modelAttribute="filtroAvanzadoAlumno">
+	
 		<div class="form-row">
-			<div class="form-group col-md-4">
-				
-				<mvc:label path="campo">Filtrar por:</mvc:label>
-				<mvc:select path="campo">
-					<mvc:options items="${listaFiltrar}" path="campo"/>
-				</mvc:select>
-			</div>
-			<div class="form-group col-md-6">
 		
-				<mvc:label path="valor">Como:</mvc:label>
-				<mvc:input path="valor" placeholder="Buscar..." />
-				
-				
+			<div class="col">
+				<mvc:label path="dni">DNI:</mvc:label>
 			</div>
 			
-			<div class="form-group col-md-1">
+			<div class="col">
+				<mvc:label path="ciclo">Ciclo:</mvc:label>
+			</div>
+			
+			<div class="col">
+				<mvc:label path="horario">Horario:</mvc:label>
+			</div>
+			
+			<div class="col">
+				&nbsp;
+			</div>
 		
+		</div>
+		
+		<div class="form-row">
+			
+			<div class="col">
+				<mvc:select path="dni">
+					<mvc:option value="-" label="Ninguno"/>
+					<mvc:options items="${dniListaAlumnos}"/>
+				</mvc:select>
+			</div>
+			
+			<div class="col">
+				<mvc:select path="ciclo">
+					<mvc:option value="-" label="Ninguno"/>
+					<mvc:options items="${cicloListaAlumnos}"/>
+				</mvc:select>
+			</div>
+			
+			<div class="col">
+				<mvc:select path="horario">
+					<mvc:option value="-" label="Ninguno"/>
+					<mvc:options items="${horarioListaAlumnos}"/>
+				</mvc:select>
+			</div>
+			
+			<div class="col">
 				<input type="submit" class="btn btn-success" value="Filtrar">
-				
 			</div>
 			
 		</div>
-		
+					
 	</mvc:form>
 
 	<thead class="thead-dark">

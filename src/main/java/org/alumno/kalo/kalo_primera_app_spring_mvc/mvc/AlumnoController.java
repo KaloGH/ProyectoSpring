@@ -13,6 +13,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoEx
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAvanzadoAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
@@ -84,9 +85,9 @@ public class AlumnoController {
 			return "redirect:login";
 		}
 		
-		model.put("filtroAlumno", new FiltroAlumno("",""));
+		model.put("filtroAvanzadoAlumno", new FiltroAvanzadoAlumno());
 		
-		if (ordenar != null) {
+		if (ordenar != null && !ordenar.equals("")) {
 			model.put("alumnos", servicioAlumno.listaAlumnos(ordenar));
  		} else {
  			model.put("alumnos", servicioAlumno.listaAlumnos());
@@ -108,6 +109,28 @@ public class AlumnoController {
 		model.put("pagina", paginaAlumno);
 		servicioPagina.setPagina(paginaAlumno);
 
+		return "list-alumno";
+	}
+	
+	
+	// *************************************************************************************************
+	// ******************* Peticion POST de LIST-ALUMNO => Reenvia a list-alumno ************************
+	// *************************************************************************************************
+
+	@RequestMapping(value = "filtro-avanzado-alumnos", method = RequestMethod.POST)
+	public String listarAlumnoConFiltroAvanzado(@Valid FiltroAvanzadoAlumno filtroAvanzadoAlumnos,BindingResult validacion ,ModelMap model) {
+		
+		model.put("pagina", paginaAlumno);
+		servicioPagina.setPagina(paginaAlumno);
+		
+		model.put("filtroAvanzadoAlumno",filtroAvanzadoAlumnos);
+		
+		if (validacion.hasErrors()) {
+			model.put("alumnos", servicioAlumno.listaAlumnos());
+		} else {
+			model.put("alumnos",servicioAlumno.filtroAvanzadoAlumnos(filtroAvanzadoAlumnos));
+		}
+		
 		return "list-alumno";
 	}
 
@@ -165,6 +188,22 @@ public class AlumnoController {
 	public Object[] getListaTiposDocAlumno() {
 		return servicioAlumno.listaTiposDocAlumno().toArray();
 	}
+	
+	@ModelAttribute("cicloListaAlumnos")
+	public List<String> getCicloListaAlumnos(){
+		return servicioAlumno.cicloListaAlumnos();
+	}
+	
+	@ModelAttribute("dniListaAlumnos")
+	public List<String> getDniListaAlumnos() {
+		return servicioAlumno.dniListaAlumnos();
+	}
+	
+	@ModelAttribute("horarioListaAlumnos")
+	public List<String> getHorarioListaAlumnos() {
+		return servicioAlumno.horarioListaAlumnos();
+	}
+	
 	
 	
 
@@ -308,7 +347,7 @@ public class AlumnoController {
 	  			if (alumno == null)
 	  				throw new Exception("Alumno desconocido");
 	  			if (model.getAttribute("usuario")== null)
-	  				throw new Exception("Para añadir documentacion debe estar logeado");
+	  				throw new Exception("Para aï¿½adir documentacion debe estar logeado");
 	  			
 	  			servicioAlumno.addDocAlumno(alumno, docAlumno);
 	  			Usuario usuarioActivo = (Usuario) model.getAttribute("usuario");

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoEx
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAvanzadoAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
@@ -280,5 +282,52 @@ public class AlumnoService {
 	public List<String> listaTiposDocAlumno() {
 		return listaTiposDoc;
 	}
+	
+	// Para el Filtro avanzado //
+	
+	public List<String> cicloListaAlumnos(){
+		Set<String> listaSinRepeticiones = alumnos.stream().filter(a->a.getCiclo()!=null).map(a->a.getCiclo()).collect(Collectors.toSet());
+		return listaSinRepeticiones.stream().sorted().collect(Collectors.toList());
+	}
+	
+	public List<String> dniListaAlumnos() {
+		Set<String> listaSinRepeticiones = alumnos.stream().filter(a->a.getDni()!=null).map(a->a.getDni()).collect(Collectors.toSet());
+		return listaSinRepeticiones.stream().sorted().collect(Collectors.toList());
+	}
+	
+	public List<String> horarioListaAlumnos() {
+		Set<String> listaSinRepeticiones = alumnos.stream().filter(a->a.getHorario()!=null).map(a->a.getHorario()).collect(Collectors.toSet());
+		return listaSinRepeticiones.stream().sorted().collect(Collectors.toList());
+	}
+	
+	public List<Alumno> filtroAvanzadoAlumnos(FiltroAvanzadoAlumno filtroAvanzadoAlumno) {
+		List<Alumno> lista = alumnos; // Lista inicialmente contiene todos los alumnos
+		try { // Ahora si hace falta vamos filtrando y quedandonos con los alumnos resultantes del filtrado
+			//Desconocido si hacemos una depuracion se almacena como "-"
+			
+			if(!"-".equals(filtroAvanzadoAlumno.getDni())) { // Si que debemos filtrar por dni
+				lista = lista.stream().filter(a->a.getDni()!=null && a.getDni().equals(filtroAvanzadoAlumno.getDni())).collect(Collectors.toList());
+			}
+			
+			if(!"-".equals(filtroAvanzadoAlumno.getCiclo())) {
+				lista = lista.stream().filter(a->a.getCiclo()!=null && a.getCiclo().equals(filtroAvanzadoAlumno.getCiclo())).collect(Collectors.toList());
+			}
+		
+			if(!"-".equals(filtroAvanzadoAlumno.getHorario())) {
+				lista = lista.stream().filter(a->a.getHorario()!=null && a.getHorario().equals(filtroAvanzadoAlumno.getHorario())).collect(Collectors.toList());
+			}
+			
+		} catch (Exception e) { //Si hay error la lista debe estar vacia.
+			lista = new ArrayList<Alumno>();
+		}
+		
+		if(lista == null) //Si hay cualquier problema y la lista esta null devolvemos lista vacia
+			return new ArrayList<Alumno>();
+		return lista;//Devolvemos la lista despues de realizar los filtros
+		
+	}
+	
+	
+	
 
 }

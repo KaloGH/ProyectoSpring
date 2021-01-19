@@ -38,6 +38,7 @@ public class Usuario implements Serializable,Comparable<Usuario>,Modificable<Usu
 		this.nickname = nickname;
 		this.password = password;
 		this.nombre = nombre;
+		this.nombreFicheroConImagen = "desconocido.jpg";
 	}
 	
 	public Usuario(String nickname,
