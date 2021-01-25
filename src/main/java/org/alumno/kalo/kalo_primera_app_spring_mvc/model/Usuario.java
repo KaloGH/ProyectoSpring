@@ -27,6 +27,7 @@ public class Usuario implements Serializable,Comparable<Usuario>,Modificable<Usu
 	
 	private String nombreFicheroConImagen; // Contendra el nickname.ext , donde ext será JPG , GIF o PNG.
 	
+
 	private Date ts; // Almacena la fecha de la ultima modificacion
 	private String user; //Almacena la persona que ha realizado la ultima modificacion.
 	
@@ -46,8 +47,17 @@ public class Usuario implements Serializable,Comparable<Usuario>,Modificable<Usu
 			super();
 			this.nickname = nickname;
 			this.password = password;
+			this.nombreFicheroConImagen = "desconocido.jpg";
+
 	}
 	
+	public String getNombreFicheroConImagen() {
+		return nombreFicheroConImagen;
+	}
+	
+	public void setNombreFicheroConImagen(String nombreFicheroConImagen) {
+		this.nombreFicheroConImagen = nombreFicheroConImagen;
+	}
 	public String getNickname() {
 		return nickname;
 	}
@@ -137,8 +147,13 @@ public class Usuario implements Serializable,Comparable<Usuario>,Modificable<Usu
 
 	@Override
 	public String mensajeNoSePuedeModificar() {
-		// TODO Auto-generated method stub
-		return null;
+		 // Mensaje generico para poder reutilizarlo
+        String msg = "\r\n\t[ERROR]\r\n<br/>" + "\t'$item' ha sido modificado por otro usuario.\r\n<br/>"
+                + "\tPara evitar la perdida de informacion se impide guardar '$item'.\r\n<br/>"
+                + "\tUltima modificacion realizada por [" + this.getUser() + "] el [" + Ts.ts(this.getTs())
+                + "]\r\n<br/>";
+        // Para concretar el tipo de registro modificado sustituimos $item por Alumno
+        return msg.replace("$item", "Alumno");
 	}
 	
 	

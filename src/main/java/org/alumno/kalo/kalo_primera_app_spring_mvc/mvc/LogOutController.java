@@ -19,6 +19,8 @@ import org.springframework.web.bind.support.SessionStatus;
       public String logout(@ModelAttribute Usuario usuario,ModelMap model,SessionStatus status) {
     	status.setComplete();
     	model.put("usuario", new Usuario("","",""));
+    	model.put("loginName", "Desconocido");
+    	model.put("loginNickName", "Desconocido");
     	model.clear();
         return "redirect:login";
       }

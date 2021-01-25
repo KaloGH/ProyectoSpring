@@ -40,36 +40,57 @@ public class LoginController {
 	@RequestMapping(value={"/","login"},method = RequestMethod.GET)
 	public String urlInicial(ModelMap model) {
 		
+		Usuario user =(Usuario) model.getAttribute("usuario");
+		
 		model.put("pagina", paginaLogin);
+		
+		System.out.println(model.getAttribute("usuario"));
 				
 		// Si no existe el usuario crea uno nuevo - de lo contrario cada vez que el usuario apriete home se borrara el usuario ingresado anteriormente
-		if (model.getAttribute("usuario") == null)
-			model.addAttribute("usuario", new Usuario("","",""));
-		
+		if (user == null) {
+			
+			user = new Usuario("","","");
+			
+			model.put("usuario", user);
+			
+			model.addAttribute("loginName","Desconocido");
+			model.addAttribute("loginNickName","Desconocido");
+		}
+		if (user.getNickname() != ""){			
+			return "bienvenida";
+		} 
 		return "login";
+		
+		
+			
+		
+		
 	}
 	
 	@RequestMapping(value="login",method = RequestMethod.POST)
 	public String procesaLogin(@RequestParam(required = false) String errores,ModelMap model , @Valid Usuario usuario ,BindingResult validacion) {
 
 		if (validacion.hasErrors()) {
-			model.put("pagina", paginaLogin);
-			model.addAttribute("usuario", usuario);
-			return "login";
+			
+			model.put("usuario", new Usuario("","",""));
+			return"login";
 		}
 		
 		model.put("pagina", paginaLogin);
 		
 		if (!servicioLogin.usuarioValido(usuario)) {
 			//Usuario inválido, volver a intentar logearse
-			model.put("errores", "Usuario '"+usuario.getNickname()+"' o contraseña incorrectos.");
+			String msgError = "Usuario '"+usuario.getNickname()+"' o contraseña incorrectos.";
+			model.put("errores", msgError);
 			servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Login Incorrecto","Login incorrecto de '"+usuario.getNickname()+"'"));
 			return "login";
+		} else {
+			
+			model.put("loginNickName",usuario.getNickname());
+			model.put("loginName",usuario.getNombre());
+			model.put("usuario", usuario);
+			return "bienvenida";
 		}
 		
-		model.put("loginNickName",usuario.getNickname());
-		model.put("loginName",usuario.getNombre());
-		model.put("usuario", usuario);
-		return "bienvenida";
 	}
 }

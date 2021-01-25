@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
-@SessionAttributes("usuario")
+@SessionAttributes({"usuario","loginName","loginNickName"})
 public class AlumnoController {
 	
 	Pagina paginaAlumno = new Pagina("Alumnos", "list-alumno");
