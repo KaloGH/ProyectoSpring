@@ -7,7 +7,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.validaciones.ValidadorImagenes;
@@ -45,9 +44,7 @@ public class FileService {
 	private static final String CARPETA_IMAGENES_USUARIOS = CARPETA_FICHEROS_DINAMICOS_WEBAPP+"ImagenesUsuarios";
 	
 	//Aqui iran el resto de las carpetas.
-	
-	/** TIPOS DE IMAGENES PERMITIDOS */
-	private static final List<String> tiposDeImagenes = Arrays.asList("image/png","image/jpg","image/jpeg","image/gif");
+
 	
 	
 	public FileSystemResource getImagenUsuario(String fichero) {
@@ -111,6 +108,19 @@ public class FileService {
 		String extension = ValidadorImagenes.getExtension(fichero);
 		String nombreFichero = nickName+"."+extension;
 		return nombreFichero;
+	}
+	
+	public String getExtensionMultipartFile(MultipartFile file) {
+		
+		return file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
+		
+	}
+	public String generaNombreDocumento(String DNI , String ID,String EXT) {
+		return DNI+"_idDoc_"+ID+"."+EXT;
+	}
+	
+	public ArrayList<String> guardaDocumentoAlumno(MultipartFile fichero, String nombreFichero){ //TODO: Guardar documento en la carpeta correspondiente
+		return new ArrayList<String>();
 	}
 	
 	

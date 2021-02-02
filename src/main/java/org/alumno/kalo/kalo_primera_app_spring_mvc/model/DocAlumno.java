@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 public class DocAlumno implements Serializable {
 
@@ -26,7 +27,29 @@ public class DocAlumno implements Serializable {
 	
 	@Length(min= 10, message="Los comentarios deben tener al menos 10 caracteres.")
 	private String comentario;
+	
+	private MultipartFile fichero;
+	private String tipoFichero;
+	private String contentTypeFichero;
 
+	public MultipartFile getFichero() {
+		return fichero;
+	}
+	public void setFichero(MultipartFile fichero) {
+		this.fichero = fichero;
+	}
+	public String getTipoFichero() {
+		return tipoFichero;
+	}
+	public void setTipoFichero(String tipoFichero) {
+		this.tipoFichero = tipoFichero;
+	}
+	public String getContentTypeFichero() {
+		return contentTypeFichero;
+	}
+	public void setContentTypeFichero(String contentTypeFichero) {
+		this.contentTypeFichero = contentTypeFichero;
+	}
 	public DocAlumno(Integer id) {
 		super();
 		this.id = id;

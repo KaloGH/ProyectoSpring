@@ -19,6 +19,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.FileService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -52,6 +53,9 @@ public class AlumnoController {
 	
 	@Autowired
 	ModuloService servicioModulo;
+	
+	@Autowired
+	FileService servicioFile;
 	
 	
 	@InitBinder
@@ -332,6 +336,10 @@ public class AlumnoController {
 		 @RequestMapping(value = ("add-docAlumno") ,method=RequestMethod.POST)
 	      public String addDocumentacion(ModelMap model , @Valid DocAlumno docAlumno , BindingResult validacion) {
 	    	  
+			 //Obtener extension del fichero
+			 String extDoc = servicioFile.getExtensionMultipartFile(docAlumno.getFichero());
+			 
+			 
 			 model.put("pagina", paginaAlumno);
 			 servicioPagina.setPagina(paginaAlumno);
 			 

@@ -40,79 +40,65 @@
 	<br>
 	<span>Si desea añadir nueva documentacion introduzca los datos</span><br><br>
 	
-	<mvc:form method="post" action="add-docAlumno" modelAttribute="docAlumno">
+	<mvc:form method="post" action="add-docAlumno" enctype="multipart/form-data" modelAttribute="docAlumno">
 		<mvc:errors path="*" cssClass="text-warning" />
 		
 
-			<div class="form-row">
 			<mvc:input path="dni" type="hidden" id="dni" class="form-control" value="${alumno.getDni()}"/>
 			
 
-				<div class="col">
+				<div class="form-row">
 				
 					<!-- ID -->
-					<div class="form-row">
+					<div class="col">
 						<mvc:label path="id">Id:</mvc:label>
 						<mvc:input path="id" type="number" id="id" class="form-control" required="required" readonly="true"/>
 						<mvc:errors path="id" cssClass="text-danger"/>
+							<div class="row">
+								<div class="col">
+								<!-- Comentario -->
+									<mvc:label path="comentario">Comentario:</mvc:label><br>
+										<mvc:textarea class="form-control" path="comentario" rows="3" cols="70" /> 
+								</div>
+							</div>
 					</div>
 					
-					<div class="form-row">
-					<!-- Comentario -->
 					
-		
-						<mvc:label path="comentario">Comentario:</mvc:label>	
-							<mvc:textarea path="comentario" rows="3" cols="70" /> &nbsp
-					
+					<div class="col">
+				
+						<mvc:label path="tipo">Tipo:</mvc:label><br>
+						<mvc:radiobuttons path="tipo" items="${listaTipos}" element="div"/>
 					</div>
-
-				</div>
-					
-				<!-- Tipo -->
-				<div class="col">
 				
-					<mvc:label path="tipo">Tipo:</mvc:label><br>
-					<mvc:radiobuttons path="tipo" items="${listaTipos}" element="div"/>
-				
-				</div>
-				
-				<div class="col">
-									
-					<!-- Boton -->
-					<input type="submit" value="Añadir" class="btn btn-success"/>
-				</div>
-				
-
-
+					<div class="col">				
+						<!-- Boton -->
+						<input type="submit" value="Añadir" class="btn btn-success"/>
+					</div>
 			</div>
-				
-				
-				
 			
-
-		</mvc:form><br><br>
+	</mvc:form><br><br>
 		
-		<table class="table table-striped">
+	<table class="table table-striped">
 	
 
-	<thead class="thead-dark">
-		<th>Id</th>
-		<th>Tipo</th>
-		<th>Comentario</th>
+		<thead class="thead-dark">
+			<th>Id</th>
+			<th>Tipo</th>
+			<th>Comentario</th>
+			
+		</thead>
+		<tbody>
 		
-	</thead>
-	<tbody>
+		</tbody>
 	
-	</tbody>
-	
-	<c:forEach items="${alumno.getDocAlumno()}" var="documento">
-	<tr>
-		<td>${documento.getId()}</td>
-		<td>${documento.getTipo()}</td>
-		<td>${documento.getComentario()}</td>
-	</tr>
-	</c:forEach>
-	
+		<c:forEach items="${alumno.getDocAlumno()}" var="documento">
+			<tr>
+				<td>${documento.getId()}</td>
+				<td>${documento.getTipo()}</td>
+				<td>${documento.getComentario()}</td>
+			</tr>
+		</c:forEach>
+		
 	</table>
 		
 	</div>
