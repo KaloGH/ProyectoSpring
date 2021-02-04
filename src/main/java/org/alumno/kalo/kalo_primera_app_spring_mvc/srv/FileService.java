@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.alumno.kalo.kalo_primera_app_spring_mvc.validaciones.ValidadorDocumentoAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.validaciones.ValidadorImagenes;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,9 @@ public class FileService {
 	
 	//Carpeta con las imagenes de los usuarios
 	private static final String CARPETA_IMAGENES_USUARIOS = CARPETA_FICHEROS_DINAMICOS_WEBAPP+"ImagenesUsuarios";
+	
+//	TODO: Crear carpeta para los documentos.
+	private static final String CARPETA_DOCUMENTOS_USUARIOS = CARPETA_FICHEROS_DINAMICOS_WEBAPP+"DocumentacionUsuarios";
 	
 	//Aqui iran el resto de las carpetas.
 
@@ -120,7 +124,21 @@ public class FileService {
 	}
 	
 	public ArrayList<String> guardaDocumentoAlumno(MultipartFile fichero, String nombreFichero){ //TODO: Guardar documento en la carpeta correspondiente
-		return new ArrayList<String>();
+		
+		//Comprobacion de errores
+				if (!ValidadorDocumentoAlumno.documentoValido(fichero)) {
+					return ValidadorDocumentoAlumno.mensajesErrorDocumento(fichero);
+				}
+				
+				// Guardar fichero
+				String errorAlGuardar = guardarFichero(CARPETA_DOCUMENTOS_USUARIOS + SEPARATOR+nombreFichero, fichero);
+				if (errorAlGuardar == null ) {
+					return new ArrayList<String>();
+					
+				} else {
+					
+					return new ArrayList<String>(List.of(errorAlGuardar));
+				}
 	}
 	
 	

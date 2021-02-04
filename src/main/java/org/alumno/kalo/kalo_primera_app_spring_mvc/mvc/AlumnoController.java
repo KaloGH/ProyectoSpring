@@ -1,6 +1,7 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -336,9 +337,9 @@ public class AlumnoController {
 		 @RequestMapping(value = ("add-docAlumno") ,method=RequestMethod.POST)
 	      public String addDocumentacion(ModelMap model , @Valid DocAlumno docAlumno , BindingResult validacion) {
 	    	  
-			 //Obtener extension del fichero
+			//Obtener extension del fichero
 			 String extDoc = servicioFile.getExtensionMultipartFile(docAlumno.getFichero());
-			 
+			 String nombreFichero = servicioFile.generaNombreDocumento(docAlumno.getDni(), docAlumno.getId().toString(), extDoc);
 			 
 			 model.put("pagina", paginaAlumno);
 			 servicioPagina.setPagina(paginaAlumno);
@@ -357,12 +358,28 @@ public class AlumnoController {
 	  			if (model.getAttribute("usuario")== null)
 	  				throw new Exception("Para a�adir documentacion debe estar logeado");
 	  			
+	  		
+				 
+	  			
 	  			servicioAlumno.addDocAlumno(alumno, docAlumno);
 	  			Usuario usuarioActivo = (Usuario) model.getAttribute("usuario");
 	  			servicioAlumno.updateAlumno(alumno, usuarioActivo.getNickname());
 	  			
-	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
 	  			model.addAttribute("docAlumno",new DocAlumno(servicioAlumno.siguienteDoc(dni)));
+	  			
+	  			//	Guardar documento del alumno.
+	  			String mnsjErroresAlGuardar="";
+	  			ArrayList<String> arrayErrores = servicioFile.guardaDocumentoAlumno(docAlumno.getFichero(), nombreFichero);
+	  			
+	  			if (arrayErrores.size() > 0) {
+	  				for (String mnsjError : arrayErrores) {
+	  					mnsjErroresAlGuardar += mnsjError+"<br>";
+					}
+	  				model.addAttribute("errores",mnsjErroresAlGuardar);
+	  			}
+	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
+	  			docAlumno.setTipo(extDoc);
+	  			docAlumno.setContentTypeFichero(docAlumno.getFichero().getContentType());
 	  			
 	  			return "doc-alumno";
 	  			
