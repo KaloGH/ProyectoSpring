@@ -327,6 +327,18 @@ public class AlumnoService {
 		
 	}
 	
+	/*
+	 * Metodo para encontrar un documento de un alumno con el DNI y el ID del documento.
+	 */
+		public Optional<DocAlumno> encontrarDocAlumnoPorDni_IdDoc(String dni, Integer id) {
+			ArrayList<DocAlumno> docAlumno = devuelveAlumno(dni).getDocAlumno();
+			
+			return  docAlumno.stream()
+					.filter(documentacion -> id == documentacion.getId())
+					.findFirst();
+			
+		}
+	
 	
 	
 

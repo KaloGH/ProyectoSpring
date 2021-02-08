@@ -96,6 +96,8 @@
 				<td>${documento.getId()}</td>
 				<td>${documento.getTipo()}</td>
 				<td>${documento.getComentario()}</td>
+				<td><a class="btn btn-info" href="add-alumno">Descargar</a>
+				</td>
 			</tr>
 		</c:forEach>
 		

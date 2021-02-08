@@ -119,6 +119,7 @@ public class FileService {
 		return file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
 		
 	}
+	// TODO: Borrar esta funcion porque se realiza en el alumnoController.
 	public String generaNombreDocumento(String DNI , String ID,String EXT) {
 		return DNI+"_idDoc_"+ID+"."+EXT;
 	}
@@ -140,6 +141,16 @@ public class FileService {
 					return new ArrayList<String>(List.of(errorAlGuardar));
 				}
 	}
+	
+	/*
+	 *	Devuelve el documento del Alumno. 
+	 */
+	
+	
+	public FileSystemResource getDocumentoAlumno(String fichero) {
+		return new FileSystemResource(new File(CARPETA_DOCUMENTOS_USUARIOS, fichero));
+	}
+	
 	
 	
 }

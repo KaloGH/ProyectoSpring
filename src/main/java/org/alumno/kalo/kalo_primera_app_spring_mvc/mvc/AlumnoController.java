@@ -1,12 +1,18 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
@@ -26,16 +32,22 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @SessionAttributes({"usuario","loginName","loginNickName"})
@@ -377,9 +389,9 @@ public class AlumnoController {
 					}
 	  				model.addAttribute("errores",mnsjErroresAlGuardar);
 	  			}
-	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
 	  			docAlumno.setTipo(extDoc);
 	  			docAlumno.setContentTypeFichero(docAlumno.getFichero().getContentType());
+	  			model.addAttribute("alumno",servicioAlumno.devuelveAlumno(docAlumno.getDni()));
 	  			
 	  			return "doc-alumno";
 	  			
@@ -392,5 +404,41 @@ public class AlumnoController {
 
 	  		}
 	      }
+		 
+		 
+		  //Atiende a la documentacion 
+		 
+		 @RequestMapping(value = "/descargar-docAlumno/{dni}/{idDoc}" , method = RequestMethod.GET)
+		 public @ResponseBody void descargarDocAlumno(HttpServletResponse response,
+				 @PathVariable("dni") String dni,
+				 @PathVariable("idDoc") Integer idDoc) throws IOException {
+			 
+			 try {
+				 Optional<DocAlumno> docAlumno = servicioAlumno.encontrarDocAlumnoPorDni_IdDoc(dni, idDoc);
+				 if (docAlumno.isPresent()) { // Si existe el documento de ese alumno con ese id
+					 //Obtener fichero
+					 String nombreFichero = dni+"_idDoc_"+idDoc+"."+docAlumno.get().getTipoFichero();
+					 FileSystemResource resource = servicioFile.getDocumentoAlumno(nombreFichero);
+					 
+					 if (!resource.exists())
+						 throw new IOException("El documento con el DNI '"+dni+"' y el id '"+idDoc+"' no existe.");
+					 
+					 File fichero = resource.getFile();
+					 //Montar respuesta para el navegador web
+					 response.setContentType(docAlumno.get().getContentTypeFichero());
+					 response.setHeader("Content-Disposition", "attachment; filename="+fichero.getName());
+					 response.setHeader("Content-Length",String.valueOf(fichero.length()));
+					 InputStream in = new FileInputStream(fichero);
+					 FileCopyUtils.copy(in, response.getOutputStream());
+					 
+				} else {
+					throw new IOException("El documento con el DNI '"+dni+"' y el id '"+idDoc+"' no existe.");
+				}
+			 } catch (Exception e) {
+				 //Ante cualquier error devolver error 404 recurso no encontrado.
+				 throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+			 }
+			 
+		 }
 		 
 }
