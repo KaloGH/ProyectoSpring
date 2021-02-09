@@ -417,7 +417,7 @@ public class AlumnoController {
 				 Optional<DocAlumno> docAlumno = servicioAlumno.encontrarDocAlumnoPorDni_IdDoc(dni, idDoc);
 				 if (docAlumno.isPresent()) { // Si existe el documento de ese alumno con ese id
 					 //Obtener fichero
-					 String nombreFichero = dni+"_idDoc_"+idDoc+"."+docAlumno.get().getTipoFichero();
+					 String nombreFichero = dni+"_idDoc_"+idDoc+"."+servicioFile.getExtensionMultipartFile(docAlumno.get().getFichero());
 					 FileSystemResource resource = servicioFile.getDocumentoAlumno(nombreFichero);
 					 
 					 if (!resource.exists())

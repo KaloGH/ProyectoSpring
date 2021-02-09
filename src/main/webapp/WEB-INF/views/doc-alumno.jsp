@@ -61,6 +61,11 @@
 										<mvc:textarea class="form-control" path="comentario" rows="3" cols="70" /> 
 								</div>
 							</div>
+							<br>
+							<div class="row">
+								<mvc:input path="fichero" type="file"/><form:errors path="fichero"/><br>
+								<mvc:errors path="fichero" cssClass="text-warning"/><br>
+							</div>
 					</div>
 					
 					
@@ -72,7 +77,8 @@
 				
 					<div class="col">				
 						<!-- Boton -->
-						<input type="submit" value="Añadir" class="btn btn-success"/>
+						
+						<button type="submit" class="btn btn-success">Añadir &nbsp;<i class="fas fa-plus-circle"></i></button>
 					</div>
 			</div>
 			
@@ -85,6 +91,7 @@
 			<th>Id</th>
 			<th>Tipo</th>
 			<th>Comentario</th>
+			<th>Accion</th>
 			
 		</thead>
 		<tbody>
@@ -96,7 +103,7 @@
 				<td>${documento.getId()}</td>
 				<td>${documento.getTipo()}</td>
 				<td>${documento.getComentario()}</td>
-				<td><a class="btn btn-info" href="add-alumno">Descargar</a>
+				<td><a class="btn btn-info" href="descargar-docAlumno/${documento.getDni()}/${documento.getId()}">Descargar <i class="far fa-arrow-alt-circle-down"></i></a>
 				</td>
 			</tr>
 		</c:forEach>

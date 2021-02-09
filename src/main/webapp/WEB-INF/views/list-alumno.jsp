@@ -54,10 +54,11 @@
 			</div>
 			
 			<div class="col">
-				<input type="submit" class="btn btn-success" value="Filtrar">
+				<button type="submit" class="btn btn-success" >Filtrar &nbsp; <i class="fas fa-search"></i></button>
 			</div>
 			
 		</div>
+		<br>
 					
 	</mvc:form>
 
@@ -86,9 +87,9 @@
 		/></td>
 		
 		<td>
-		<a class="btn btn-success" href="update-alumno?dni=${alumno.getDni()}">Modificar</a>
-		<a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar</a>
-		<a class="btn btn-warning" href="docs-alumno?dni=${alumno.getDni()}">Documentacion</a>
+		<a class="btn btn-success" href="update-alumno?dni=${alumno.getDni()}">Modificar &nbsp; <i class="fas fa-edit"></i></a>
+		<a class="btn btn-danger" href="del-alumno?dni=${alumno.getDni()}">Borrar &nbsp; <i class="fas fa-trash-alt"></i></a>
+		<a class="btn btn-warning" href="docs-alumno?dni=${alumno.getDni()}">Documentacion &nbsp;<i class="fas fa-file-alt"></i></a>
 		
 		</td>
 		
@@ -98,7 +99,7 @@
 	
 	</table>
 
-<a class="btn btn-success" href="add-alumno">Añadir alumno</a>
+<a class="btn btn-success" href="add-alumno">Añadir alumno &nbsp; <i class="far fa-plus-square"></i></a>
 
 </div>
 
