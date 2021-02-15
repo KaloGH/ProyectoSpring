@@ -2,7 +2,7 @@
 <%@ include file="../jspf/menuSuperior.jspf" %>
 
 	<div class="container">
-	<h1>Listado de Errores</h1> <br>
+	<h1><spring:message code="log.errores.titulo"/></h1> <br>
 	
 	
 	
@@ -13,21 +13,21 @@
 		
 				<select name="campoFiltro" required>
 					<option>ID</option>
-					<option>Tipo</option>
-					<option>Explicacion</option>
+					<option><spring:message code="etiqueta.tipo"/></option>
+					<option><spring:message code="etiqueta.explicacion"/></option>
 				</select>
 		
 			</div>
 			<div class="form-group col-md-6">
 		
-				<label for="textoFiltro">Como:</label>
+				<label for="textoFiltro"><spring:message code="etiqueta.como"/>:</label>
 				<input type="text" name="textoFiltro" id="textoFiltro">
 				
 			</div>
 			
 			<div class="form-group col-md-1">
 		
-				<input type="submit" class="btn btn-success" value="Filtrar">
+				<input type="submit" class="btn btn-success" value="<spring:message code="boton.filtrar"/>">
 				
 			</div>
 			
@@ -38,9 +38,9 @@
 	<table class="table table-striped">
 	<thead class="thead-dark">
 		<th><a style="color: white;" href="list-logerror?ordenar=id">ID</a></th>
-		<th><a style="color: white;" href="list-logerror?ordenar=tipo">Tipo</a></th>
-		<th><a style="color: white;" href="list-logerror?ordenar=info">Explicacion</a></th>
-		<th>Accion</th>
+		<th><a style="color: white;" href="list-logerror?ordenar=tipo"><spring:message code="etiqueta.tipo"/></a></th>
+		<th><a style="color: white;" href="list-logerror?ordenar=info"><spring:message code="etiqueta.explicacion"/></a></th>
+		<th><spring:message code="etiqueta.accion"/></th>
 	</thead>
 	<tbody>
 	
@@ -50,7 +50,7 @@
 		<td>${logerror.getId()}</td>
 		<td>${logerror.getTipo()}</td>
 		<td>${logerror.getInfo()}</td>
-		<td><a class="btn btn-danger" href="del-logerror?id=${logerror.getId()}">Borrar</a></td>
+		<td><a class="btn btn-danger" href="del-logerror?id=${logerror.getId()}"><spring:message code="boton.borrar"/></a></td>
 		
 	</tr>
 	</c:forEach>

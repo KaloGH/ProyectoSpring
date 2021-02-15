@@ -3,7 +3,7 @@
 <%@ include file="../jspf/menuSuperior.jspf"%>
 
 	<div class="container">
-		<h1>Imagen del usuario</h1>
+		<h1><spring:message code="usuarioImagen.titulo"/></h1>
 		<p>
 			<font color="red">${errores}</font>
 		</p>
@@ -12,10 +12,10 @@
 		
 		<mvc:form method="post" action="guardar-imagen-usuario" enctype="multipart/form-data" modelAttribute="imagenUsuario">
 			<mvc:hidden path="nickname"/>
-			<mvc:label path="imagen">Puede actualizar la imagen seleccionando una nueva:</mvc:label>
+			<mvc:label path="imagen"><spring:message code="usuarioImagen.explicacion"/>:</mvc:label>
 			<mvc:input path="imagen" type="file"/><form:errors path="imagen"/><br>
 			<mvc:errors path="imagen" cssClass="text-warning"/><br>
-			<button type="submit" class="btn btn-success"><i class="fas fa-user-edit"></i>&nbsp;Actualizar</button>
+			<button type="submit" class="btn btn-success"><i class="fas fa-user-edit"></i>&nbsp;<spring:message code="boton.modificar"/></button>
 		</mvc:form>
 	</div>
 	

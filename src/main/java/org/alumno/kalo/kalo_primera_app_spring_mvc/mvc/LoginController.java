@@ -1,5 +1,8 @@
 package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
@@ -38,14 +41,21 @@ public class LoginController {
 	
 	
 	@RequestMapping(value={"/","login"},method = RequestMethod.GET)
-	public String urlInicial(ModelMap model) {
+	public String urlInicial(HttpServletRequest request , Locale locale , ModelMap model) {
+		
+		//Traza i18n
+		//Informacion idioma de la peticion del navegador
+		System.out.println("Accept-Language: "
+				+request.getHeader("Accept-Language"));
+		//Informacion del localeResolver
+		System.out.println(String
+				.format("Peticion recibida. Languaje: %s, Pais: %s %n", 
+						locale.getLanguage(), locale.getDisplayCountry()));
 		
 		Usuario user =(Usuario) model.getAttribute("usuario");
 		
 		model.put("pagina", paginaLogin);
-		
-		System.out.println(model.getAttribute("usuario"));
-				
+						
 		// Si no existe el usuario crea uno nuevo - de lo contrario cada vez que el usuario apriete home se borrara el usuario ingresado anteriormente
 		if (user == null) {
 			

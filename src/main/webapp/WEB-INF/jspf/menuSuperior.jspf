@@ -16,17 +16,17 @@
       </li>
         <li class="nav-item ${pagina.getStrBootstrapActiva("list-alumno")}">
         <a class="nav-link" href="list-alumno">
-			<i class="fas fa-user-friends"></i>&nbsp;Alumnos
+			<i class="fas fa-user-friends"></i>&nbsp;<spring:message code="alumnos.menuSuperior" />
 		</a>
       </li>
         <li class="nav-item ${pagina.getStrBootstrapActiva("list-modulo")}">
         <a class="nav-link" href="list-modulo">
-			<i class="fas fa-book"></i>&nbsp;Modulos
+			<i class="fas fa-book"></i>&nbsp;<spring:message code="modulos.menuSuperior" />
 		</a>
       </li>
         <li class="nav-item ${pagina.getStrBootstrapActiva("list-logerror")}">
         <a class="nav-link" href="list-logerror">
-			<i class="fas fa-skull-crossbones"></i>&nbsp;Errores</a>
+			<i class="fas fa-skull-crossbones"></i>&nbsp;<spring:message code="errores.menuSuperior" /></a>
       </li>
   </div>
   	<div class="nav-item dropdown">
@@ -36,14 +36,14 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">
-			<i class="fas fa-pen"></i>&nbsp; Editar
+			<i class="fas fa-pen"></i>&nbsp; <spring:message code="usuario.editar" />
 		  </a>
           <a class="dropdown-item" href="update-imagenUsuario?nickName=${loginNickName}">
-            <i class="fas fa-user-circle"></i>&nbsp; Foto
+            <i class="fas fa-user-circle"></i>&nbsp; <spring:message code="usuario.foto" />
           </a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item  text-danger" href="logout">
-            <i class="fas fa-door-open"></i>&nbsp; Logout
+            <i class="fas fa-door-open"></i>&nbsp; <spring:message code="usuario.salir" />
           </a>
         </div>
   	</div>

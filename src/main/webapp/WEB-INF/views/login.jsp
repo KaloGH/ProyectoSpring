@@ -10,13 +10,13 @@
 	
 	<mvc:form method="post" action="login" modelAttribute="usuario">
 		
-		<mvc:label path="nickname">Nombre de Usuario: </mvc:label>
+		<mvc:label path="nickname"><spring:message code="login.introduzca.usuario" />: </mvc:label>
 		<mvc:input path="nickname"/> </br>
 		<mvc:errors path="nickname" cssClass="text-danger"/>
 		
 		 <br> <br> 
 		
-		<mvc:label path="password">Contraseña: </mvc:label>
+		<mvc:label path="password"><spring:message code="login.introduzca.pw" />: </mvc:label>
 		<mvc:password path="password"/></br>
 		<mvc:errors path="password" cssClass="text-danger"/> 
 				<br> <input type="submit" value="Login" />

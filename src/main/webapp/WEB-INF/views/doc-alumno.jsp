@@ -3,14 +3,16 @@
 <%@ include file="../jspf/menuSuperior.jspf"%>
 
 	<div class="containter">
-		<h1>Documentacion del alumno</h1>
+		<h1><spring:message code="alumno.documentacion.titulo"/></h1>
 		<br> <br>
 		<c:choose>
 		<c:when test="${errores == null}"></c:when>
 		<c:when test="${errores != null}">
 		
 		<div class="alert alert-danger" role="alert">
-  			<strong>¡ Error !</strong> ${errores}
+  			<strong>
+  			${errores}
+  			</strong> 
 		</div>
 		
 		</c:when>
@@ -20,10 +22,10 @@
 	
 
 	<thead class="thead-dark">
-		<th>DNI</th>
-		<th>Nombre</th>
-		<th>Ciclo</th>
-		<th>Curso</th>
+		<th><spring:message code="etiqueta.dni"/></th>
+		<th><spring:message code="etiqueta.nombre"/></th>
+		<th><spring:message code="etiqueta.ciclo"/></th>
+		<th><spring:message code="etiqueta.curso"/></th>
 	</thead>
 	<tbody>
 	
@@ -38,7 +40,7 @@
 	
 	</table>
 	<br>
-	<span>Si desea añadir nueva documentacion introduzca los datos</span><br><br>
+	<span><spring:message code="alumno.documentacion.explicacion"/></span><br><br>
 	
 	<mvc:form method="post" action="add-docAlumno" enctype="multipart/form-data" modelAttribute="docAlumno">
 		<mvc:errors path="*" cssClass="text-warning" />
@@ -57,7 +59,7 @@
 							<div class="row">
 								<div class="col">
 								<!-- Comentario -->
-									<mvc:label path="comentario">Comentario:</mvc:label><br>
+									<mvc:label path="comentario"><spring:message code="etiqueta.comentario"/>:</mvc:label><br>
 										<mvc:textarea class="form-control" path="comentario" rows="3" cols="70" /> 
 								</div>
 							</div>
@@ -71,14 +73,14 @@
 					
 					<div class="col">
 				
-						<mvc:label path="tipo">Tipo:</mvc:label><br>
+						<mvc:label path="tipo"><spring:message code="etiqueta.tipo"/>:</mvc:label><br>
 						<mvc:radiobuttons path="tipo" items="${listaTipos}" element="div"/>
 					</div>
 				
 					<div class="col">				
 						<!-- Boton -->
 						
-						<button type="submit" class="btn btn-success">Añadir &nbsp;<i class="fas fa-plus-circle"></i></button>
+						<button type="submit" class="btn btn-success"><spring:message code="boton.anyadir"/> &nbsp;<i class="fas fa-plus-circle"></i></button>
 					</div>
 			</div>
 			
@@ -89,9 +91,9 @@
 
 		<thead class="thead-dark">
 			<th>Id</th>
-			<th>Tipo</th>
-			<th>Comentario</th>
-			<th>Accion</th>
+			<th><spring:message code="etiqueta.tipo"/></th>
+			<th><spring:message code="etiqueta.comentario"/></th>
+			<th><spring:message code="etiqueta.accion"/></th>
 			
 		</thead>
 		<tbody>
@@ -103,7 +105,7 @@
 				<td>${documento.getId()}</td>
 				<td>${documento.getTipo()}</td>
 				<td>${documento.getComentario()}</td>
-				<td><a class="btn btn-info" href="descargar-docAlumno/${documento.getDni()}/${documento.getId()}">Descargar <i class="far fa-arrow-alt-circle-down"></i></a>
+				<td><a class="btn btn-info" href="descargar-docAlumno/${documento.getDni()}/${documento.getId()}"><spring:message code="boton.descargar"/> <i class="far fa-arrow-alt-circle-down"></i></a>
 				</td>
 			</tr>
 		</c:forEach>

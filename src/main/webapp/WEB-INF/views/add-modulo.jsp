@@ -3,9 +3,7 @@
 <%@ include file="../jspf/menuSuperior.jspf"%>
 
 	<div class="containter">
-		<h1>Añadir nuevo Modulo</h1>
-		<br>
-		<h4>Introduzca los datos del nuevo Modulo.</h4>
+		<h1><spring:message code="modulos.explicacion" /></h1>
 		<br> <br>
 		
 		<c:choose>
@@ -13,7 +11,7 @@
 		<c:when test="${errores != null}">
 		
 		<div class="alert alert-danger" role="alert">
-  			<strong>¡ Error !</strong> ${errores}
+  			<strong> ${errores} </strong> 
 		</div>
 		
 		</c:when>
@@ -30,7 +28,7 @@
 
 					<!-- Nombre -->
 					
-					<mvc:label path="nombre">Nombre</mvc:label>
+					<mvc:label path="nombre"><spring:message code="etiqueta.nombre"/></mvc:label>
 					<mvc:input path="nombre" type="text" id="nombre" class="form-control" required="required"/>
 					<mvc:errors path="nombre" cssClass="text-danger"/>
 					
@@ -42,7 +40,7 @@
 
 					<!-- Horas -->
 					
-					<mvc:label path="horas">Horas</mvc:label>
+					<mvc:label path="horas"><spring:message code="etiqueta.horas"/></mvc:label>
 					<mvc:input path="horas" type="number" id="horas" class="form-control" required="required"/>
 					<mvc:errors path="horas" cssClass="text-danger"/>
 					
@@ -56,14 +54,14 @@
 				<div class="form-group ">
 
 					<!-- Abreviatura -->
-					<mvc:label path="abreviatura">Abreviatura</mvc:label>
+					<mvc:label path="abreviatura"><spring:message code="etiqueta.abreviatura"/></mvc:label>
 					<mvc:input path="abreviatura" type="text" id="abreviatura" class="form-control" required="required"/>
 					<mvc:errors path="abreviatura" cssClass="text-danger"/>
 				</div>			
 			</div>
 			
 			
-			<input type="submit" value="Añadir" class="btn btn-success"/>
+			<input type="submit" value="<spring:message code="boton.anyadir"/>" class="btn btn-success"/>
 <%-- 			<mvc:input path="envia" type="submit" value="Añadir" class="btn btn-success"/> --%>
 
 		</mvc:form>
