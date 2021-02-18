@@ -3,12 +3,14 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LoginService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -35,13 +37,16 @@ public class LoginController {
 	@Autowired
 	LogErrorService servicioLogError;
 	
+	@Autowired
+	I18nService servicioIdiomas;
+	
 	Pagina paginaLogin = new Pagina("Login","login");
 	
 	//LoginService servicioLogin = new LoginService();
 	
 	
 	@RequestMapping(value={"/","login"},method = RequestMethod.GET)
-	public String urlInicial(HttpServletRequest request , Locale locale , ModelMap model) {
+	public String urlInicial(HttpServletRequest request ,HttpServletResponse response , Locale locale , ModelMap model) {
 		
 		//Traza i18n
 		//Informacion idioma de la peticion del navegador
@@ -51,6 +56,8 @@ public class LoginController {
 		System.out.println(String
 				.format("Peticion recibida. Languaje: %s, Pais: %s %n", 
 						locale.getLanguage(), locale.getDisplayCountry()));
+		
+		servicioIdiomas.configuraIdiomaPeticion(request, response, locale);
 		
 		Usuario user =(Usuario) model.getAttribute("usuario");
 		
