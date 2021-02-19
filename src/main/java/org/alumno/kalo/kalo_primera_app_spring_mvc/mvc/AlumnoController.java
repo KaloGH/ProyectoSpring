@@ -27,6 +27,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.FileService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -69,6 +70,9 @@ public class AlumnoController {
 	
 	@Autowired
 	FileService servicioFile;
+	
+	@Autowired
+	I18nService servicioIdiomas;
 	
 	
 	@InitBinder
@@ -177,23 +181,30 @@ public class AlumnoController {
 	}
 	
 	@ModelAttribute("generoLista")
-	public Object[] getGeneroLista() {
-		return servicioAlumno.listaGeneros().toArray();
+	public List<String> getGeneroLista() {
+		List<String> i18nLista = servicioIdiomas.getTraduccion(servicioAlumno.listaGeneros());
+//		return servicioAlumno.listaGeneros().toArray();
+		return i18nLista;
 	}
 	
 	@ModelAttribute("horarioLista")
-	public Object[] getHorarioLista() {
-		return servicioAlumno.listaHorario().toArray();
+	public List<String> getHorarioLista() {
+//		return servicioAlumno.listaHorario().toArray();
+		List<String> i18nLista = servicioIdiomas.getTraduccion(servicioAlumno.listaHorario());
+		return i18nLista;
 	}
 	
 	@ModelAttribute("paisLista")
-	public Map<String,String> getPais() {
-		return servicioAlumno.devuelvePais();
+	public Map<String,String> getPais() {		
+		Map<String,String> i18nLista = servicioIdiomas.getTraduccion(servicioAlumno.devuelvePais());
+		return i18nLista;
+		
 	}
 	
 	@ModelAttribute("moduloLista")
 	public List<Modulo> modelLista(){
 		return servicioModulo.listar("");
+		
 	}
 	
 	@ModelAttribute("listaFiltrar")

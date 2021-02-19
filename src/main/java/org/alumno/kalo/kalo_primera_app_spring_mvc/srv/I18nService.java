@@ -2,6 +2,7 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.srv;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,6 +34,10 @@ public class I18nService {
 	// Devuelve la lista traducida al idioma configurado en la petición
 	public List<String> getTraduccion(List<String> listaMsgOriginal) {
 		List<String> resultado=new ArrayList<String>();
+		
+		for (String msgOriginal : listaMsgOriginal) {
+			resultado.add(getTraduccion(msgOriginal));
+		}
 		//FALTA Implementar método
 		return resultado;
 	}
@@ -40,6 +45,10 @@ public class I18nService {
 	// Devuelve el mapa con el contenido (2º String)traducido al idioma configurado en la petición
 	public Map<String, String> getTraduccion(Map<String, String> mapMsgOriginal) {
 		Map<String, String> resultado=new HashMap<String,String>();
+		
+
+		mapMsgOriginal.forEach((k,v) -> resultado.put(k,getTraduccion(v)));
+		
 		//FALTA Implementar método
 		return resultado;
 	}

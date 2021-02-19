@@ -48,14 +48,14 @@ public class LoginController {
 	@RequestMapping(value={"/","login"},method = RequestMethod.GET)
 	public String urlInicial(HttpServletRequest request ,HttpServletResponse response , Locale locale , ModelMap model) {
 		
-		//Traza i18n
-		//Informacion idioma de la peticion del navegador
-		System.out.println("Accept-Language: "
-				+request.getHeader("Accept-Language"));
-		//Informacion del localeResolver
-		System.out.println(String
-				.format("Peticion recibida. Languaje: %s, Pais: %s %n", 
-						locale.getLanguage(), locale.getDisplayCountry()));
+//		//Traza i18n
+//		//Informacion idioma de la peticion del navegador
+//		System.out.println("Accept-Language: "
+//				+request.getHeader("Accept-Language"));
+//		//Informacion del localeResolver
+//		System.out.println(String
+//				.format("Peticion recibida. Languaje: %s, Pais: %s %n", 
+//						locale.getLanguage(), locale.getDisplayCountry()));
 		
 		servicioIdiomas.configuraIdiomaPeticion(request, response, locale);
 		
