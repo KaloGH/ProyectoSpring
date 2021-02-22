@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ImagenUsuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.FileService;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -32,17 +33,20 @@ public class UsuarioController {
 	@Autowired
 	LoginService servicioLogin;
 	
+	@Autowired
+	I18nService servicioIdioma;
+	
 	@RequestMapping(value= "/imagenUsuario/{nickName}", method= RequestMethod.GET)
 	public ResponseEntity<FileSystemResource> getFile(@PathVariable("nickName") String nickName) {
 		try {
 			
-		/** Implementar lógica en esta sección (y otras...) para rellenar “nombreFicheroConImagen”:
+		/** Implementar lï¿½gica en esta secciï¿½n (y otras...) para rellenar ï¿½nombreFicheroConImagenï¿½:
 		
-		Tener en cuenta que en caso de no estar logeado {loginNickName} será
-		“Desconocido”, por lo que la imagen a mostrar será imagenUsuario/Desconocido.
+		Tener en cuenta que en caso de no estar logeado {loginNickName} serï¿½
+		ï¿½Desconocidoï¿½, por lo que la imagen a mostrar serï¿½ imagenUsuario/Desconocido.
 		Si estamos logeados deberemos de consultar la imagen del usuario que por
-		defecto (hasta que el usuario la cambie en un próximo paso)
-		deberá ser “Desconocido.jpg”. */
+		defecto (hasta que el usuario la cambie en un prï¿½ximo paso)
+		deberï¿½ ser ï¿½Desconocido.jpgï¿½. */
 			
 			String nombreFicheroConImagen;
 			
@@ -54,7 +58,7 @@ public class UsuarioController {
 				nombreFicheroConImagen = usuario.getNombreFicheroConImagen();
 			}
 			
-		//El servicio nos devolverá la imagen y nos abstrae de saber donde esta guardada realmente
+		//El servicio nos devolverï¿½ la imagen y nos abstrae de saber donde esta guardada realmente
 		FileSystemResource resource = fileService.getImagenUsuario(nombreFicheroConImagen);
 		if (!resource.exists()) {
 			throw new Exception("La imagen no existe");
@@ -96,10 +100,16 @@ public class UsuarioController {
 	            usuario.setNombreFicheroConImagen(fileService.getNombreImagenUsuario(imagenUsuario.getImagen(), imagenUsuario.getNickname()));
 	            //Modificar usuario que li pase ixe usuari
 	            servicioLogin.modificaUsuario(usuario, imagenUsuario.getNickname());
+	            
 	            return "update-ImagenUsuario";
 
 	        } else { //Hay errores
-	            model.put("errores", "Lista errores: " + listaErroresAlGuardar);
+	        	String mensajeCompleto="";
+	        	for (String mensaje : listaErroresAlGuardar) {
+	        		mensajeCompleto+=servicioIdioma.getTraduccion(mensaje)+"<br>";
+	        	}
+	            model.put("errores",  mensajeCompleto);
+	            
 	            return "update-ImagenUsuario";
 	        }
 				

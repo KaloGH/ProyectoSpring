@@ -91,7 +91,7 @@ public class AlumnoController {
 	@RequestMapping(value = "list-alumno", method = RequestMethod.GET)
 	public String listarAlumno(@RequestParam(required = false)String ordenar,ModelMap model) {
 		Usuario user = (Usuario) model.getAttribute("usuario");
-		
+		paginaAlumno.setIdioma(servicioIdiomas.getIdioma());
 		System.out.println(((Usuario) model.getAttribute("usuario")).getNickname()); //TODO: Arreglar esto. Falla porque funciona sin nombre.
 		
 		if (user.getNickname() == "") {

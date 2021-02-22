@@ -5,6 +5,7 @@ import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.ModuloService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
@@ -25,6 +26,8 @@ public class ModuloController {
 	PaginaService paginaService;
 	@Autowired
 	LogErrorService servicioLogError;
+	@Autowired
+	I18nService servicioIdioma;
 
 	@RequestMapping(value = "list-modulo", method = RequestMethod.GET)
 	public String listarAlumno(@RequestParam(required = false) String criterio, ModelMap model) {
@@ -36,7 +39,7 @@ public class ModuloController {
 		}
 		
 		model.put("modulos", moduloService.listar(criterio == null ? "" : criterio));
-		paginaService.setPagina(new Pagina("Lista de módulos", "list-modulo"));
+		paginaService.setPagina(new Pagina("Lista de módulos", "list-modulo", servicioIdioma.getIdioma()));
 		model.put("pagina", paginaService.getPagina());
 		return "list-modulo";
 	}

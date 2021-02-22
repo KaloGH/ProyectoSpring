@@ -23,6 +23,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 public class I18nService {
 	@Autowired
 	private ReloadableResourceBundleMessageSource i18n_mensaje;
+	
 	@Autowired
 	private SessionLocaleResolver idiomaPeticiones; //bean definido en alumno-service.xml
 
@@ -87,5 +88,8 @@ public class I18nService {
 			return Optional.empty();
 		else // Devolvemos el idioma de la petición (idioma del navegador)
 			return Optional.of(locale);
+	}
+	public String getIdioma() {
+			return LocaleContextHolder.getLocale().getLanguage();
 	}
 }

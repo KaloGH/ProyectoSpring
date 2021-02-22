@@ -47,4 +47,22 @@
           </a>
         </div>
   	</div>
+  	<div class="nav-item dropdown">
+
+		<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-
+		haspopup="true" aria-expanded="false">
+			<img alt="castellano" src="imagenes/${pagina.getIdioma()}.png" >
+		</a>
+		<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			<a class="dropdown-item" href="${pagina.getPaginaActiva()}?language=es">
+				<img alt="castellano" src="imagenes/es.png" >&nbsp;es
+			</a>
+			<a class="dropdown-item" href="${pagina.getPaginaActiva()}?language=ca">	
+				<img alt="english" src="imagenes/ca.png" >&nbsp;va
+			</a>
+			<a class="dropdown-item" href="${pagina.getPaginaActiva()}?language=en">
+				<img alt="english" src="imagenes/en.png" >&nbsp;en
+			</a>
+		</div>
+	</div>
     </nav>

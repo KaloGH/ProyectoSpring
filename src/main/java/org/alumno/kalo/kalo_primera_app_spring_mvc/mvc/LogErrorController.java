@@ -4,6 +4,7 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.mvc;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.LogErrorService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.PaginaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class LogErrorController {
 	@Autowired
 	LogErrorService servicioLogError;
 	
+	@Autowired 
+	I18nService servicioIdioma;
+	
 
 	// *************************************************************************************************
 	// ******************* Peticion GET de LIST-Errores => Reenvia a list-errores ************************
@@ -36,6 +40,7 @@ public class LogErrorController {
 	public String listarLogError(@RequestParam(required = false) String ordenar ,@RequestParam(required = false) String campoFiltro,
 			@RequestParam(required = false) String textoFiltro,ModelMap model) {
 			Usuario user = (Usuario) model.getAttribute("usuario");
+			paginaLogError.setIdioma(servicioIdioma.getIdioma());
 
 			if (user.getNickname() == "") {
 				servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Acceso Denegado","Usuario anónimo ha intentado acceder a la web"));

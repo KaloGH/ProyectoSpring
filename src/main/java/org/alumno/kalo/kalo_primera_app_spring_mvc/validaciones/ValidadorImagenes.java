@@ -7,11 +7,16 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ValidadorImagenes implements ConstraintValidator<ImagenValida , MultipartFile> {
 	public static final List<String> tiposDeImagenes = Arrays.asList("image/png","image/jpg","image/jpeg","image/gif");
-	public static final long MAX_BYTES = 52488; //512kb de tamaño maximo
+	public static final long MAX_BYTES = 52488; //512kb de tamaï¿½o maximo
+	
+	@Autowired
+	I18nService servicioIdioma;
 	
 	public static ArrayList<String> mensajesErrorImagen(MultipartFile fichero) {
 		ArrayList<String> errores = new ArrayList<String>();
@@ -25,9 +30,9 @@ public class ValidadorImagenes implements ConstraintValidator<ImagenValida , Mul
 		if (!tipoDeImagenValido(contentType))
 			errores.add("Solo se permiten imagenes PNG , JPG o GIF");
 		
-		//Comprobar tamaño maximo
+		//Comprobar tamaï¿½o maximo
 		if (fichero.getSize()>MAX_BYTES)
-			errores.add("Tamaño maximo de la imagen excedido ("+MAX_BYTES+" bytes)");
+			errores.add("Tamaï¿½o maximo de la imagen excedido ("+MAX_BYTES+" bytes)");
 		
 		return errores;
 	}
@@ -75,14 +80,15 @@ public class ValidadorImagenes implements ConstraintValidator<ImagenValida , Mul
 		boolean result = true;
 		
 		//comprobar lista de errores
-		ArrayList<String> listaErrores = mensajesErrorImagen(multipartFile);
-		// Si hay errores añadirlos al contexto
+		ArrayList<String> listaErrores = 
+				(ArrayList<String>) servicioIdioma.getTraduccion(mensajesErrorImagen(multipartFile));
+		// Si hay errores aï¿½adirlos al contexto
 		
 		
 		if(!listaErrores.isEmpty()) {
 			context.disableDefaultConstraintViolation();
 			
-			// iteramos por la lista de errores para añadirlos al contexto
+			// iteramos por la lista de errores para aï¿½adirlos al contexto
 			
 			for (String textoError : listaErrores) {
 				context.buildConstraintViolationWithTemplate(

@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {ValidadorImagenes.class})
 public @interface ImagenValida {
-	String message() default "Imagen incorrecta";
+	String message() default "{imagenValida.mensajePorDefecto}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 

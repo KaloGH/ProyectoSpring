@@ -40,13 +40,16 @@ public class LoginController {
 	@Autowired
 	I18nService servicioIdiomas;
 	
+	//Pagina paginaLogin = new Pagina("Login","login",servicioIdiomas.getIdioma());
 	Pagina paginaLogin = new Pagina("Login","login");
+
 	
 	//LoginService servicioLogin = new LoginService();
 	
 	
 	@RequestMapping(value={"/","login"},method = RequestMethod.GET)
 	public String urlInicial(HttpServletRequest request ,HttpServletResponse response , Locale locale , ModelMap model) {
+		paginaLogin.setIdioma(servicioIdiomas.getIdioma());
 		
 //		//Traza i18n
 //		//Informacion idioma de la peticion del navegador
