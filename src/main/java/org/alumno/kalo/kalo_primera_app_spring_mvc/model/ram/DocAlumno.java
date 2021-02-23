@@ -1,4 +1,4 @@
-package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
+package org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram;
 
 import java.io.Serializable;
 

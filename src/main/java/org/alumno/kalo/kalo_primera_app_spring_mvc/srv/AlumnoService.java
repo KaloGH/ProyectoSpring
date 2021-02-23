@@ -15,17 +15,20 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
+
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAvanzadoAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.dto.AlumnoEdit;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCicloNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoCursoNombre;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoDni;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.order.ComparadorAlumnoEdadNombre;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.DocAlumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.mapper.AlumnoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -156,14 +159,14 @@ public class AlumnoService {
 	}
 
 	// Funcion añadir Alumno a la lista.
-	public void addAlumno(Alumno alumno) throws AlumnoDuplicadoException {
+	public void addAlumno(AlumnoEdit alumnoEdit) throws AlumnoDuplicadoException {
 
-		if (existeAlumno(alumno)) {
-			servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Insercion duplicada","Insercion duplicada del alumno '"+alumno.getDni()+"'"));
-			throw new AlumnoDuplicadoException(devuelveAlumno(alumno.getDni()), alumno);
+		if (existeAlumno(alumnoEdit.getDni())) {
+			servicioLogError.addLogError(new LogError(servicioLogError.asignarId(),"Insercion duplicada","Insercion duplicada del alumno '"+alumnoEdit.getDni()+"'"));
+			throw new AlumnoDuplicadoException(devuelveAlumno(alumnoEdit.getDni()), alumnoEdit);
 			
 		} else {
-			alumnos.add(alumno);
+			alumnos.add(AlumnoMapper.INSTANCE.alumnoEditToAlumno(alumnoEdit));
 		}
 
 	}
@@ -175,15 +178,15 @@ public class AlumnoService {
 	}
 
 	// Funcion comprobar si existe alumno.
-	public boolean existeAlumno(Alumno alumno) {
-
-		for (Alumno alumnoActivo : alumnos) {
-
-			if (alumnoActivo.getDni().equals(alumno.getDni())) {
-				return true;
-			}
+	public boolean existeAlumno(String dni) {
+		
+		Optional<String> dniAlumno = alumnos.stream().map(a -> a.getDni()).filter(id -> id.equals(dni)).findFirst();
+		
+		if (dniAlumno.isPresent()) {
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 
 	}
 
@@ -230,7 +233,7 @@ public class AlumnoService {
 			delAlumno(alumnoActual);
 			alumnoModificado.setUser(usuarioModificacion);
 			alumnoModificado.setTs(new Date());
-			addAlumno(alumnoModificado);
+			addAlumno(AlumnoMapper.INSTANCE.alumnoToAlumnoEdit(alumnoModificado));
 			
 			// Revisar esto de arriba
 			

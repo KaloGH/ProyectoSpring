@@ -3,12 +3,10 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.srv;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ImagenUsuario;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class LoginService {

@@ -2,7 +2,8 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.model.order;
 
 import java.util.Comparator;
 
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.Alumno;
+
 
 
 public class ComparadorAlumnoCicloNombre implements Comparator<Alumno> {

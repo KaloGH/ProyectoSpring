@@ -3,6 +3,8 @@ package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.Alumno;
+
 public class FiltroAlumno {
 	
 	public FiltroAlumno() {

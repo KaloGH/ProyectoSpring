@@ -23,7 +23,7 @@
 		
 		
 
-		<mvc:form method="post" action="add-alumno" modelAttribute="alumno">
+		<mvc:form method="post" action="add-alumno" modelAttribute="alumnoEdit">
 		<mvc:errors path="*" cssClass="text-warning" />
 		
 			<div class="form-row">

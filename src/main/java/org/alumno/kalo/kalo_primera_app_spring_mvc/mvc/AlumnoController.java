@@ -16,15 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.alumno.kalo.kalo_primera_app_spring_mvc.excepciones.AlumnoDuplicadoException;
-
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Alumno;
-import org.alumno.kalo.kalo_primera_app_spring_mvc.model.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.FiltroAvanzadoAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.LogError;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Modulo;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Pagina;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Usuario;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.dto.AlumnoEdit;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.Alumno;
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram.DocAlumno;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.AlumnoService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.FileService;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.srv.I18nService;
@@ -171,6 +171,7 @@ public class AlumnoController {
 //		model.addAttribute("interesadoEnLista",servicioAlumno.listaInteresadoEn().toArray());
 		model.addAttribute("alumno", new Alumno("", 18, "DAW", 2, "Nuevo Alumno",true,superInteresao,"Python","Tarde","FR",modulaso,"Ingresa los Hobbies del alumno aquí."));
 		servicioPagina.setPagina(paginaAlumno);
+		model.addAttribute("alumnoEdit",new AlumnoEdit());
 
 		return "add-alumno";
 	}
@@ -240,7 +241,7 @@ public class AlumnoController {
 	// *************************************************************************************************
 
 	@RequestMapping(value = "add-alumno", method = RequestMethod.POST)
-	public String addAlumno(ModelMap model, @Valid Alumno alumno, BindingResult validacion) {
+	public String addAlumno(ModelMap model, @Valid AlumnoEdit alumnoEdit, BindingResult validacion) {
 
 		if (validacion.hasErrors()) {
 			// Hay errores de validacion y debemos volver al formulario de alta.
@@ -254,7 +255,7 @@ public class AlumnoController {
 		model.put("pagina", paginaAlumno);
 
 		try {
-			servicioAlumno.addAlumno(alumno);
+			servicioAlumno.addAlumno(alumnoEdit);
 
 			// Para evitar pasar parametros innecesarios
 			model.clear();

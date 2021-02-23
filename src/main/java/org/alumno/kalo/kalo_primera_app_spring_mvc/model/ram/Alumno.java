@@ -1,4 +1,4 @@
-package org.alumno.kalo.kalo_primera_app_spring_mvc.model;
+package org.alumno.kalo.kalo_primera_app_spring_mvc.model.ram;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.alumno.kalo.kalo_primera_app_spring_mvc.model.Ts;
 import org.alumno.kalo.kalo_primera_app_spring_mvc.model.interfaces.Modificable;
 import org.hibernate.validator.constraints.Length;
 
